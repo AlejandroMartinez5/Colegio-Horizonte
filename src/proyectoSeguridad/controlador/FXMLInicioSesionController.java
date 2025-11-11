@@ -1,0 +1,147 @@
+/*
+ * Alejandro Martinez Ramirez
+ * 
+ */
+package proyectoSeguridad.controlador;
+
+import java.io.IOException;
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
+import proyectoSeguridad.modelo.dao.InicioDeSesionDAO;
+import proyectoSeguridad.modelo.pojo.Usuario;
+import proyectoSeguridad.proyectoSeguridad;
+import proyectoSeguridad.utilidades.Utilidad;
+
+public class FXMLInicioSesionController implements Initializable {
+
+    @FXML
+    private TextField tfUsuario;
+    @FXML
+    private PasswordField tfPassword;
+    @FXML
+    private Label lbErrorUsuario;
+    @FXML
+    private Label lbErrorPassword;
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        
+        
+        
+    }
+
+    @FXML
+    private void tfUsuarioPresionaEnter(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            tfPassword.requestFocus();
+            event.consume();
+        }
+    }
+
+    @FXML
+    private void tfPasswordPresionaEnter(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            btnClicVerificarSesion(new ActionEvent());
+            event.consume();
+        }
+    }
+
+    @FXML
+    private void btnClicVerificarSesion(ActionEvent event) {
+        String username = tfUsuario.getText();
+        String password = tfPassword.getText();
+
+        if (validarCampos(username, password)) {
+           validarCredenciales(username, password);
+        }
+    }
+
+    private boolean validarCampos(String username, String password) {
+        lbErrorPassword.setText("");
+        lbErrorUsuario.setText("");
+        boolean camposValidos = true;
+
+        if (username.isEmpty()) {
+            lbErrorUsuario.setText("Usuario requerido");
+            camposValidos = false;
+        }
+
+        if (password.isEmpty()) {
+            lbErrorPassword.setText("Contraseña requerida");
+            camposValidos = false;
+        }
+
+        return camposValidos;
+    }
+
+    private void validarCredenciales(String username, String password) {
+        try {
+            Usuario usuarioSesion = InicioDeSesionDAO.verificarCredenciales(username, password);
+
+            if (usuarioSesion != null) {
+                Utilidad.mostrarAlertaSimple(Alert.AlertType.INFORMATION,
+                        "Inicio de sesión exitoso", usuarioSesion.toString() +
+                        ", bienvenido(a) al sistema.");
+if (usuarioSesion.getRol().equals("Alumno")) {
+    irPantallaPrincipal(usuarioSesion, "/proyectoSeguridad/vista/FXMLPrincipal.fxml", "Home Estudiante");
+} else if (usuarioSesion.getRol().equals("Docente")) {
+    irPantallaPrincipalDocente(usuarioSesion, "/proyectoSeguridad/vista/FXMLPantallaPrincipalDocente.fxml", "Home Docente");
+} else if (usuarioSesion.getRol().equals("Administrador")) {
+    irPantallaPrincipal(usuarioSesion, "/proyectofinal/vista/FXMLPrincipal.fxml", "Home Académico");
+}
+            } else {
+                Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING,
+                        "Credenciales incorrectas", "Usuario y/o contraseña incorrectos, por favor verifica tu información.");
+            }
+        } catch (SQLException ex) {
+            Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Error en la base de datos", 
+                    "Error de conexión con base de datos, inténtalo más tarde");
+            Utilidad.getEscenario(tfUsuario).close();
+        } catch (IOException ex) {
+            Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR,
+                    "Error al cargar pantalla principal", "No se pudo cargar la pantalla");
+            Utilidad.getEscenario(tfUsuario).close();
+        }
+    }
+
+    private void irPantallaPrincipal(Usuario usuarioSesion, String fxmlPath, String titulo) throws IOException {
+        Stage escenarioBase = (Stage) tfUsuario.getScene().getWindow();
+        FXMLLoader cargador = new FXMLLoader(proyectoSeguridad.class.getResource(fxmlPath));
+        Parent vista = cargador.load();
+
+      //FXMLPrincipalController controlador = cargador.getController();
+      //  controlador.inicializarInformacion(usuarioSesion);
+
+        Scene escenaPrincipal = new Scene(vista);
+        escenarioBase.setScene(escenaPrincipal);
+        escenarioBase.setTitle(titulo);
+        escenarioBase.show();
+    }
+    private void irPantallaPrincipalDocente(Usuario usuarioSesion, String fxmlPath, String titulo) throws IOException {
+        Stage escenarioBase = (Stage) tfUsuario.getScene().getWindow();
+        FXMLLoader cargador = new FXMLLoader(proyectoSeguridad.class.getResource(fxmlPath));
+        Parent vista = cargador.load();
+
+      FXMLPantallaPrincipalDocenteController controlador = cargador.getController();
+      controlador.inicializarInformación();
+
+        Scene escenaPrincipal = new Scene(vista);
+        escenarioBase.setScene(escenaPrincipal);
+        escenarioBase.setTitle(titulo);
+        escenarioBase.show();
+    }
+}
