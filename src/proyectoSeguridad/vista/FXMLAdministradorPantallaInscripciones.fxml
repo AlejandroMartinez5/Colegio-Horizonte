@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="450.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyectoSeguridad.controlador.FXMLAdministradorPantallaInscripcionesController">
+   <children>
+      <!-- Logo del Colegio -->
+      <ImageView fitHeight="135.0" fitWidth="132.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recursos/LogoColegio.png" />
+         </image>
+      </ImageView>
+
+      <!-- Título -->
+      <Label fx:id="lbNombre" layoutX="121.0" layoutY="47.0" text="Gestión de Inscripciones" textFill="#26408b">
+         <font>
+            <Font name="Gill Sans MT" size="18.0" />
+         </font>
+      </Label>
+
+      <!-- Botón cerrar sesión -->
+      <Button fx:id="btnCerrarSesion" layoutX="550.0" layoutY="20.0" mnemonicParsing="false" onAction="#clicBotonCerrarSesion" prefHeight="37.0" prefWidth="132.0" style="-fx-background-color: #26408B; -fx-border-color: #26408B; -fx-cursor: HAND;" text="Cerrar sesión" textFill="WHITE">
+         <font>
+            <Font name="Gill Sans MT" size="14.0" />
+         </font>
+         <graphic>
+            <ImageView fx:id="btn" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../recursos/iconoCerrarSesion.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+
+      <!-- Botón consultar alumnos pendientes -->
+      <Button fx:id="btnConsultarPendientes" layoutX="159.0" layoutY="266.0" mnemonicParsing="false" onAction="#clicBotonConsultarPendientes" prefHeight="58.0" prefWidth="387.0" style="-fx-background-color: #00AF4D; -fx-border-color: #26408B; -fx-cursor: HAND;" text="Consultar alumnos con inscripciones pendientes" textFill="WHITE">
+         <font>
+            <Font name="Gill Sans MT" size="18.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="37.0" fitWidth="31.0" layoutX="550.0" layoutY="280.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recursos/iconoAlumno.png" />
+         </image>
+      </ImageView>
+
+      <!-- Botón registrar pago -->
+      <Button fx:id="btnRegistrarPago" layoutX="56.0" layoutY="181.0" mnemonicParsing="false" onAction="#clicBotonRegistrarPago" prefHeight="58.0" prefWidth="246.0" style="-fx-background-color: #00AF4D; -fx-border-color: #26408B; -fx-cursor: HAND;" text="Registrar pago de inscripción" textFill="WHITE">
+         <font>
+            <Font name="Gill Sans MT" size="18.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="37.0" fitWidth="31.0" layoutX="632.0" layoutY="196.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recursos/iconoPago.png" />
+         </image>
+      </ImageView>
+
+      <!-- Reloj -->
+      <Label fx:id="lbReloj" layoutX="580.0" layoutY="400.0" textFill="#26408b">
+         <font>
+            <Font name="Gill Sans MT" size="13.0" />
+         </font>
+      </Label>
+
+      <!-- Pie de página -->
+      <Pane layoutY="410.0" prefHeight="40.0" prefWidth="700.0" style="-fx-background-color: #26408B; -fx-border-color: #00AF4D;">
+         <children>
+            <Label layoutX="520.0" layoutY="9.0" text="Colegio Horizonte" textFill="WHITE">
+               <font>
+                  <Font name="Gill Sans MT" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+
+      <!-- Línea decorativa -->
+      <Pane layoutX="105.0" layoutY="100.0" prefHeight="13.0" prefWidth="495.0" style="-fx-background-color: #00AF4D; -fx-border-color: #00AF4D;" />
+      <Button fx:id="btnConsultarPago" layoutX="370.0" layoutY="182.0" mnemonicParsing="false" onAction="#clicBotonConsultarPago" prefHeight="58.0" prefWidth="246.0" style="-fx-background-color: #00AF4D; -fx-border-color: #26408B; -fx-cursor: HAND;" text="Consultar pago de inscripción" textFill="WHITE">
+         <font>
+            <Font name="Gill Sans MT" size="18.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="37.0" fitWidth="31.0" layoutX="310.0" layoutY="195.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recursos/iconoConsultarPago.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

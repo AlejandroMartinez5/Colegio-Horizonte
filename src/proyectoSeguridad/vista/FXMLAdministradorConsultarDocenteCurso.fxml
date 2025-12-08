@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyectoSeguridad.controlador.FXMLAdministradorConsultarDocenteCursoController">
+
+    <children>
+        <!-- TÍTULO -->
+        <Label layoutX="25.0" layoutY="14.0" text="Consultar Docente por Clave de Curso" textFill="#26408B">
+            <font>
+                <Font name="Gill Sans MT" size="22" />
+            </font>
+        </Label>
+
+        <!-- BUSCADOR DE CLAVE DE CURSO -->
+        <Label layoutX="25" layoutY="70" text="Clave del curso:" />
+        <TextField fx:id="tfClaveCurso" layoutX="160" layoutY="65" prefWidth="200" promptText="Ingresa la clave del curso" />
+        <Button fx:id="btnBuscar" layoutX="380" layoutY="65" onAction="#clicBotonBuscar" style="-fx-background-color: #26408B; -fx-text-fill: white;" text="Buscar" />
+
+        <!-- RESULTADO DEL CURSO -->
+        <Label layoutX="25" layoutY="120" text="Nombre de la materia:" />
+        <Label fx:id="lbNombreMateria" layoutX="180" layoutY="120" text="---">
+            <font>
+                <Font name="Gill Sans MT" size="17" />
+            </font>
+        </Label>
+
+        <Label layoutX="25" layoutY="160" text="Clave del curso:" />
+        <Label fx:id="lbClaveCurso" layoutX="180" layoutY="160" text="---">
+            <font>
+                <Font name="Gill Sans MT" size="17" />
+            </font>
+        </Label>
+
+        <!-- RESULTADO DEL DOCENTE -->
+        <Label layoutX="25" layoutY="200" text="Nombre del docente:" />
+        <Label fx:id="lbNombreDocente" layoutX="180" layoutY="200" text="---">
+            <font>
+                <Font name="Gill Sans MT" size="17" />
+            </font>
+        </Label>
+
+        <Label layoutX="25" layoutY="240" text="Username del docente:" />
+        <Label fx:id="lbUsernameDocente" layoutX="180" layoutY="240" text="---">
+            <font>
+                <Font name="Gill Sans MT" size="17" />
+            </font>
+        </Label>
+
+        <!-- FOOTER -->
+        <Pane layoutY="361" prefHeight="39" prefWidth="600" style="-fx-background-color: #26408B;">
+            <children>
+                <Label layoutX="439.0" layoutY="9.0" text="Colegio Horizonte" textFill="WHITE">
+                    <font>
+                        <Font name="Gill Sans MT" size="18" />
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+    </children>
+</AnchorPane>

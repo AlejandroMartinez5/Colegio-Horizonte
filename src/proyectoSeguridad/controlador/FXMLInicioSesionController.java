@@ -1,7 +1,6 @@
 /*
  * Alejandro Martinez Ramirez
- * 
- */
+ * */
 package proyectoSeguridad.controlador;
 
 import java.io.IOException;
@@ -23,7 +22,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import proyectoSeguridad.modelo.dao.InicioDeSesionDAO;
 import proyectoSeguridad.modelo.pojo.Usuario;
-import proyectoSeguridad.proyectoSeguridad;
 import proyectoSeguridad.utilidades.Utilidad;
 
 public class FXMLInicioSesionController implements Initializable {
@@ -39,9 +37,7 @@ public class FXMLInicioSesionController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-        
-        
+        // Inicialización si es necesaria
     }
 
     @FXML
@@ -66,7 +62,7 @@ public class FXMLInicioSesionController implements Initializable {
         String password = tfPassword.getText();
 
         if (validarCampos(username, password)) {
-           validarCredenciales(username, password);
+            validarCredenciales(username, password);
         }
     }
 
@@ -93,51 +89,106 @@ public class FXMLInicioSesionController implements Initializable {
             Usuario usuarioSesion = InicioDeSesionDAO.verificarCredenciales(username, password);
 
             if (usuarioSesion != null) {
-                Utilidad.mostrarAlertaSimple(Alert.AlertType.INFORMATION,
-                        "Inicio de sesión exitoso", usuarioSesion.toString() +
-                        ", bienvenido(a) al sistema.");
-if (usuarioSesion.getRol().equals("Alumno")) {
-    irPantallaPrincipal(usuarioSesion, "/proyectoSeguridad/vista/FXMLPrincipal.fxml", "Home Estudiante");
-} else if (usuarioSesion.getRol().equals("Docente")) {
-    irPantallaPrincipalDocente(usuarioSesion, "/proyectoSeguridad/vista/FXMLPantallaPrincipalDocente.fxml", "Home Docente");
-} else if (usuarioSesion.getRol().equals("Administrador")) {
-    irPantallaPrincipal(usuarioSesion, "/proyectofinal/vista/FXMLPrincipal.fxml", "Home Académico");
-}
+                Utilidad.mostrarAlertaSimple(
+                    Alert.AlertType.INFORMATION,
+                    "Inicio de sesión exitoso",
+                    usuarioSesion.toString() + ", bienvenido(a) al sistema."
+                );
+
+                if (usuarioSesion.getRol().equals("Alumno")) {
+                    irPantallaPrincipalAlumno(
+                        usuarioSesion,
+                        "/proyectoSeguridad/vista/FXMLPantallaPrincipalAlumno.fxml",
+                        "Home Estudiante"
+                    );
+                } else if (usuarioSesion.getRol().equals("Docente")) {
+                    irPantallaPrincipalDocente(
+                        usuarioSesion,
+                        "/proyectoSeguridad/vista/FXMLPantallaPrincipalDocente.fxml",
+                        "Home Docente"
+                    );
+                } else if (usuarioSesion.getRol().equals("Admin")) {
+                    irPantallaPrincipalAdministrador(
+                        usuarioSesion, 
+                        "/proyectoSeguridad/vista/FXMLPantallaPrincipalAdministrador.fxml",
+                        "Home Administrador"
+                    );
+                }
+
             } else {
-                Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING,
-                        "Credenciales incorrectas", "Usuario y/o contraseña incorrectos, por favor verifica tu información.");
+                Utilidad.mostrarAlertaSimple(
+                    Alert.AlertType.WARNING,
+                    "Credenciales incorrectas",
+                    "Usuario y/o contraseña incorrectos, por favor verifica tu información."
+                );
             }
         } catch (SQLException ex) {
-            Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Error en la base de datos", 
-                    "Error de conexión con base de datos, inténtalo más tarde");
+            Utilidad.mostrarAlertaSimple(
+                Alert.AlertType.ERROR,
+                "Error en la base de datos",
+                "Error de conexión con base de datos, inténtalo más tarde"
+            );
             Utilidad.getEscenario(tfUsuario).close();
         } catch (IOException ex) {
-            Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR,
-                    "Error al cargar pantalla principal", "No se pudo cargar la pantalla");
-            Utilidad.getEscenario(tfUsuario).close();
+            Utilidad.mostrarAlertaSimple(
+                Alert.AlertType.ERROR,
+                "Error al cargar pantalla principal",
+                "No se pudo cargar la pantalla: " + ex.getMessage()
+            );
+            ex.printStackTrace();
         }
     }
 
+    // Método genérico (opcional, si se usa para otras pantallas sin datos específicos)
     private void irPantallaPrincipal(Usuario usuarioSesion, String fxmlPath, String titulo) throws IOException {
         Stage escenarioBase = (Stage) tfUsuario.getScene().getWindow();
-        FXMLLoader cargador = new FXMLLoader(proyectoSeguridad.class.getResource(fxmlPath));
+        FXMLLoader cargador = new FXMLLoader(getClass().getResource(fxmlPath));
         Parent vista = cargador.load();
-
-      //FXMLPrincipalController controlador = cargador.getController();
-      //  controlador.inicializarInformacion(usuarioSesion);
 
         Scene escenaPrincipal = new Scene(vista);
         escenarioBase.setScene(escenaPrincipal);
         escenarioBase.setTitle(titulo);
         escenarioBase.show();
     }
+
     private void irPantallaPrincipalDocente(Usuario usuarioSesion, String fxmlPath, String titulo) throws IOException {
         Stage escenarioBase = (Stage) tfUsuario.getScene().getWindow();
-        FXMLLoader cargador = new FXMLLoader(proyectoSeguridad.class.getResource(fxmlPath));
+        FXMLLoader cargador = new FXMLLoader(getClass().getResource(fxmlPath));
         Parent vista = cargador.load();
 
-      FXMLPantallaPrincipalDocenteController controlador = cargador.getController();
-      controlador.inicializarInformación();
+        // Obtenemos el controlador y pasamos el usuario
+        FXMLPantallaPrincipalDocenteController controlador = cargador.getController();
+        controlador.inicializarInformacion(usuarioSesion); // <--- AQUÍ SE PASA EL USUARIO
+
+        Scene escenaPrincipal = new Scene(vista);
+        escenarioBase.setScene(escenaPrincipal);
+        escenarioBase.setTitle(titulo);
+        escenarioBase.show();
+    }
+    
+    private void irPantallaPrincipalAlumno(Usuario usuarioSesion, String fxmlPath, String titulo) throws IOException {
+        Stage escenarioBase = (Stage) tfUsuario.getScene().getWindow();
+        FXMLLoader cargador = new FXMLLoader(getClass().getResource(fxmlPath));
+        Parent vista = cargador.load();
+
+        // Obtenemos el controlador y pasamos el usuario
+        FXMLPantallaPrincipalAlumnoController controlador = cargador.getController();
+        controlador.inicializarInformacion(usuarioSesion); // <--- AQUÍ SE PASA EL USUARIO
+
+        Scene escenaPrincipal = new Scene(vista);
+        escenarioBase.setScene(escenaPrincipal);
+        escenarioBase.setTitle(titulo);
+        escenarioBase.show();
+    }
+        
+    private void irPantallaPrincipalAdministrador(Usuario usuarioSesion, String fxmlPath, String titulo) throws IOException {
+        Stage escenarioBase = (Stage) tfUsuario.getScene().getWindow();
+        FXMLLoader cargador = new FXMLLoader(getClass().getResource(fxmlPath));
+        Parent vista = cargador.load();
+
+        // Obtenemos el controlador y pasamos el usuario
+        FXMLPantallaPrincipalAdministradorController controlador = cargador.getController();
+        controlador.inicializarInformacion(usuarioSesion); // <--- AQUÍ SE PASA EL USUARIO
 
         Scene escenaPrincipal = new Scene(vista);
         escenarioBase.setScene(escenaPrincipal);

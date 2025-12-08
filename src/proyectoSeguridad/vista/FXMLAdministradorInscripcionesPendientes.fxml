@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="450.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyectoSeguridad.controlador.FXMLAdministradorInscripcionesPendientesController">
+    <children>
+        
+        <Label layoutX="20.0" layoutY="20.0" text="Alumnos con inscripción pendiente" textFill="#26408b">
+            <font>
+                <Font name="Gill Sans MT" size="20.0"/>
+            </font>
+        </Label>
+        
+        <Button fx:id="btnCerrarSesion" layoutX="540.0" layoutY="15.0" mnemonicParsing="false" onAction="#clicBotonCerrarSesion" prefHeight="35.0" prefWidth="140.0" style="-fx-background-color: #26408B; -fx-border-color: #26408B; -fx-cursor: HAND;" text="Cerrar sesión" textFill="WHITE">
+            <font>
+                <Font name="Gill Sans MT" size="14.0"/>
+            </font>
+        </Button>
+        
+        <TableView fx:id="tvAlumnosPendientes" layoutX="20.0" layoutY="70.0" prefHeight="300.0" prefWidth="660.0">
+            <columns>
+                <TableColumn fx:id="colMatricula" text="Matrícula" prefWidth="200.0"/>
+                <TableColumn fx:id="colNombre" text="Nombre Completo" prefWidth="460.0"/>
+            </columns>
+        </TableView>
+        
+        <Button fx:id="btnExportarPDF" layoutX="20.0" layoutY="375.0" mnemonicParsing="false" onAction="#clicExportarPDF" prefHeight="30.0" prefWidth="180.0" style="-fx-background-color: #E84D34; -fx-cursor: HAND;" text="Exportar a PDF" textFill="WHITE">
+            <font>
+                <Font name="Gill Sans MT" size="13.0"/>
+            </font>
+        </Button>
+        
+        <Pane layoutY="400.0" prefHeight="50.0" prefWidth="700.0" style="-fx-background-color: #26408B; -fx-border-color: #00AF4D;">
+            <children>
+                <Label layoutX="520.0" layoutY="15.0" text="Colegio Horizonte" textFill="WHITE">
+                    <font>
+                        <Font name="Gill Sans MT" size="18.0"/>
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+        
+        <Label fx:id="lbReloj" layoutX="580.0" layoutY="370.0" textFill="#26408b">
+            <font>
+                <Font name="Gill Sans MT" size="13.0"/>
+            </font>
+        </Label>
+        
+    </children>
+</AnchorPane>

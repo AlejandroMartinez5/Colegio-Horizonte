@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyectoSeguridad.controlador.FXMLAlumnoConsultarHorariosController">
+    <children>
+        <!-- Encabezado -->
+        <Label layoutX="50.0" layoutY="30.0" text="Mi Horario Semanal" textFill="#26408B">
+            <font>
+                <Font name="Gill Sans MT" size="24.0" />
+            </font>
+        </Label>
+        
+        <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="730.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../recursos/LogoColegio.png" />
+            </image>
+        </ImageView>
+
+        <!-- Botón Regresar -->
+        <Button fx:id="btnRegresar" layoutX="600.0" layoutY="30.0" mnemonicParsing="false" onAction="#clicBotonRegresar" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #26408B; -fx-cursor: HAND;" text="Regresar" textFill="WHITE">
+            <font>
+                <Font name="Gill Sans MT" size="14.0" />
+            </font>
+        </Button>
+        
+        <Label layoutX="50.0" layoutY="80.0" text="Estos son tus cursos y horarios asignados para el periodo actual." textFill="#666666">
+            <font>
+                <Font name="System Italic" size="12.0" />
+            </font>
+        </Label>
+
+        <!-- Tabla de Horarios -->
+        <TableView fx:id="tvHorarios" layoutX="50.0" layoutY="110.0" prefHeight="430.0" prefWidth="750.0">
+            <columns>
+                <TableColumn fx:id="colMateria" prefWidth="200.0" text="Materia" />
+                <TableColumn fx:id="colDia" prefWidth="100.0" text="Día" />
+                <TableColumn fx:id="colInicio" prefWidth="100.0" text="Hora Inicio" />
+                <TableColumn fx:id="colFin" prefWidth="100.0" text="Hora Fin" />
+                <TableColumn fx:id="colDocente" prefWidth="150.0" text="Docente" />
+                <TableColumn fx:id="colAula" prefWidth="100.0" text="Aula" /> <!-- NUEVA COLUMNA -->
+            </columns>
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+            </columnResizePolicy>
+        </TableView>
+
+        <!-- Footer -->
+        <Pane layoutY="561.0" prefHeight="39.0" prefWidth="850.0" style="-fx-background-color: #26408B; -fx-border-color: #00AF4D;">
+            <children>
+                <Label layoutX="669.0" layoutY="9.0" text="Colegio Horizonte" textFill="WHITE">
+                    <font>
+                        <Font name="Gill Sans MT" size="18.0" />
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+    </children>
+</AnchorPane>

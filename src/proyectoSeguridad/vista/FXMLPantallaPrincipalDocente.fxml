@@ -26,7 +26,7 @@
                </image></ImageView>
          </graphic>
       </Button>
-      <Button fx:id="btnAlumnos" layoutX="336.0" layoutY="171.0" mnemonicParsing="false" onAction="#clicBotonReportes" prefHeight="58.0" prefWidth="173.0" style="-fx-background-color: #00AF4D; -fx-border-color: #26408B; -fx-cursor: HAND;" text="Alumnos" textFill="WHITE">
+      <Button fx:id="btnAlumnos" layoutX="336.0" layoutY="171.0" mnemonicParsing="false" onAction="#clicBotonAlumnos" prefHeight="58.0" prefWidth="173.0" style="-fx-background-color: #00AF4D; -fx-border-color: #26408B; -fx-cursor: HAND;" text="Alumnos" textFill="WHITE">
          <font>
             <Font name="Gill Sans MT" size="18.0" />
          </font>
@@ -51,12 +51,12 @@
             <Font name="Gill Sans MT" size="13.0" />
          </font>
       </Label>
-      <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="355.0" layoutY="188.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="512.0" layoutY="188.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../recursos/iconoUsuario.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="95.0" layoutY="188.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="261.0" layoutY="188.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../recursos/iconoHorario.png" />
          </image>
@@ -66,5 +66,15 @@
             <Image url="@../recursos/LogoColegio.png" />
          </image>
       </ImageView>
+      <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="410.0" layoutY="260.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recursos/iconoComunicacion.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="btnComunicaciones" layoutX="198.0" layoutY="243.0" mnemonicParsing="false" onAction="#clicBotonComunicaciones" prefHeight="58.0" prefWidth="205.0" style="-fx-background-color: #00AF4D; -fx-border-color: #26408B; -fx-cursor: HAND;" text="Comunicaciones" textFill="WHITE">
+         <font>
+            <Font name="Gill Sans MT" size="18.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

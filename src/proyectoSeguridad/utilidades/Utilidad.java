@@ -56,4 +56,15 @@ public class Utilidad {
         reloj.setCycleCount(Timeline.INDEFINITE);
         reloj.play();
     }
+    
+    public static String obtenerFechaActualFormato() {
+        // Define el formato deseado
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        
+        // Obtiene la fecha y hora actual
+        LocalDateTime now = LocalDateTime.now();
+        
+        // Retorna la fecha formateada
+        return dtf.format(now);
+    }
 }

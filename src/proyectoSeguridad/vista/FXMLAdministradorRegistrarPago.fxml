@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="450.0" prefWidth="600.0" 
+            xmlns="http://javafx.com/javafx/8" 
+            xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="proyectoSeguridad.controlador.FXMLAdministradorRegistrarPagoController">
+    
+    <children>
+        <!-- Logo Colegio -->
+        <ImageView fitHeight="136.0" fitWidth="132.0" layoutX="479.0" layoutY="132.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../recursos/LogoColegio.png" />
+            </image>
+        </ImageView>
+
+        <!-- Título -->
+        <Label layoutX="200.0" layoutY="30.0" text="Registrar Pago" textFill="#26408B">
+            <font>
+                <Font name="Gill Sans MT" size="22.0" />
+            </font>
+        </Label>
+
+        <!-- Botón Cerrar Sesión -->
+        <Button fx:id="btnCerrarSesion" layoutX="458.0" layoutY="20.0" mnemonicParsing="false" onAction="#clicBotonCerrarSesion" 
+                prefHeight="37.0" prefWidth="132.0" style="-fx-background-color: #26408B; -fx-border-color: #26408B; -fx-cursor: HAND;" 
+                text="Cerrar sesión" textFill="WHITE">
+            <font>
+                <Font name="Gill Sans MT" size="14.0" />
+            </font>
+            <graphic>
+                <ImageView fx:id="btn" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../recursos/iconoCerrarSesion.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+
+        <!-- Campos de registro -->
+        <Label layoutX="50" layoutY="100" text="Alumno:" />
+        <ComboBox fx:id="comboAlumnos" layoutX="200" layoutY="95" prefWidth="250" promptText="Selecciona un alumno" />
+
+        <Label layoutX="50" layoutY="150" text="Monto:" />
+        <Label layoutX="200" layoutY="145" text="1312.50" textFill="#000000" style="-fx-background-color: #f0f0f0; -fx-padding: 5;" prefWidth="250"/>
+
+        <Label layoutX="50" layoutY="200" text="Concepto:" />
+        <Label layoutX="200" layoutY="195" text="Inscripción" textFill="#000000" style="-fx-background-color: #f0f0f0; -fx-padding: 5;" prefWidth="250"/>
+
+        <Label layoutX="50" layoutY="250" text="Fecha:" />
+        <DatePicker fx:id="datePickerPago" layoutX="200" layoutY="245" prefWidth="250" />
+
+        <!-- Botón Registrar -->
+        <Button fx:id="btnRegistrar" layoutX="200" layoutY="300" mnemonicParsing="false" onAction="#registrarPago" 
+                prefHeight="50" prefWidth="250" style="-fx-background-color: #00AF4D; -fx-border-color: #26408B; -fx-cursor: HAND;" 
+                text="Registrar Pago" textFill="WHITE">
+            <font>
+                <Font name="Gill Sans MT" size="16.0" />
+            </font>
+        </Button>
+
+        <!-- Mensaje resultado -->
+        <Label fx:id="lbMensaje" layoutX="50" layoutY="370" textFill="red" />
+        
+        <!-- Footer -->
+        <Pane layoutY="411.0" prefHeight="39.0" prefWidth="600.0" style="-fx-background-color: #26408B; -fx-border-color: #00AF4D;">
+            <children>
+                <Label layoutX="449.0" layoutY="9.0" text="Colegio Horizonte" textFill="WHITE">
+                    <font>
+                        <Font name="Gill Sans MT" size="18.0" />
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+    </children>
+</AnchorPane>

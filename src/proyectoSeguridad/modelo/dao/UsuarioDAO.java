@@ -1,7 +1,3 @@
-/*
- * Alejandro Martinez Ramirez
- * 
- */
 package proyectoSeguridad.modelo.dao;
 
 import java.sql.Connection;
@@ -151,6 +147,49 @@ public static ResultadoOperacion registrarUsuario(Usuario usuario) throws SQLExc
     }
 
     return rol;
+}
+
+public static String obtenerNombreCompletoPorId(int idUsuario) {
+    String nombreCompleto = null;
+
+    try {
+        Connection conexion = ConexionBD.abrirConexion();
+        String query = "SELECT Nombre, Apellido FROM usuarios WHERE ID_Usuario = ?";
+        PreparedStatement stmt = conexion.prepareStatement(query);
+        stmt.setInt(1, idUsuario);
+
+        ResultSet rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            String nombre = rs.getString("Nombre");
+            String apellido = rs.getString("Apellido");
+            nombreCompleto = nombre + " " + apellido;
+        }
+
+        conexion.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    return nombreCompleto;
+}
+
+public static String obtenerUsernamePorIdUsuario(int idUsuario) throws SQLException {
+    String username = null;
+    String consulta = "SELECT Username FROM Usuarios WHERE ID_Usuario = ?";
+
+    try (Connection conexionBD = ConexionBD.abrirConexion();
+         PreparedStatement sentencia = conexionBD.prepareStatement(consulta)) {
+
+        sentencia.setInt(1, idUsuario);
+        try (ResultSet resultado = sentencia.executeQuery()) {
+            if (resultado.next()) {
+                username = resultado.getString("Username");
+            }
+        }
+    }
+
+    return username;
 }
 
 }

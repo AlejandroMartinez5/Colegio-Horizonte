@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="proyectoSeguridad.controlador.FXMLAdministradorConsultarPagosController"
+            prefHeight="450" prefWidth="700">
+    
+    <children>
+        <!-- Título -->
+        <Label layoutX="250" layoutY="20" text="Consultar Pago de Inscripción" textFill="#26408B">
+            <font>
+                <Font name="Gill Sans MT" size="22.0" />
+            </font>
+        </Label>
+
+        <!-- Buscar por matrícula -->
+        <Label layoutX="50" layoutY="80" text="Matrícula:" />
+        <TextField fx:id="txtBuscarMatricula" layoutX="150" layoutY="75" prefWidth="250" promptText="Ingrese la matrícula" />
+        <Button fx:id="btnBuscar" layoutX="420" layoutY="75" text="Buscar" onAction="#buscarPago" 
+                style="-fx-background-color: #26408B; -fx-text-fill: white;" />
+
+        <!-- Tabla de pagos recientes -->
+        <Label layoutX="50" layoutY="130" text="Últimos pagos:" />
+        <TableView fx:id="tablaPagos" layoutX="50" layoutY="160" prefWidth="600" prefHeight="200">
+            <columns>
+                <TableColumn fx:id="colIdPago" text="ID Pago" prefWidth="80" />
+                <TableColumn fx:id="colFecha" text="Fecha" prefWidth="120" />
+                <TableColumn fx:id="colMonto" text="Monto" prefWidth="100" />
+                <TableColumn fx:id="colConcepto" text="Concepto" prefWidth="200" />
+            </columns>
+        </TableView>
+
+        <!-- Mensaje de información -->
+        <Label fx:id="lbMensaje" layoutX="50" layoutY="380" textFill="red" />
+
+        <!-- Footer -->
+        <Pane layoutY="410" prefHeight="40" prefWidth="700" style="-fx-background-color: #26408B;">
+            <children>
+                <Label layoutX="550" layoutY="10" text="Colegio Horizonte" textFill="white">
+                    <font>
+                        <Font name="Gill Sans MT" size="16.0" />
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+    </children>
+</AnchorPane>

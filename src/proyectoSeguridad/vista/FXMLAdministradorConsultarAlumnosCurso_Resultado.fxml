@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyectoSeguridad.controlador.FXMLAdministradorConsultarAlumnosCurso_ResultadoController">
+
+    <children>
+
+        <!-- TÍTULO -->
+        <Label layoutX="25" layoutY="25" text="Alumnos inscritos en el curso" textFill="#26408B">
+            <font>
+                <Font name="Gill Sans MT" size="22" />
+            </font>
+        </Label>
+
+        <!-- NOMBRE DEL CURSO -->
+        <Label layoutX="25" layoutY="75" text="Nombre curso:" />
+        <Label fx:id="lbNombreCurso" layoutX="127.0" layoutY="74.0" text="---">
+            <font>
+                <Font name="Gill Sans MT" size="17" />
+            </font>
+        </Label>
+
+        <!-- TABLA DE ALUMNOS -->
+        <TableView fx:id="tvAlumnos" layoutX="25" layoutY="120" prefHeight="300" prefWidth="550" style="-fx-border-color: #00AC4F;">
+            <columns>
+                <TableColumn fx:id="colMatricula" prefWidth="275.0" text="Matrícula" />
+                <TableColumn fx:id="colNombreCompleto" prefWidth="275.0" text="Nombre completo" />
+            </columns>
+        </TableView>
+
+        <!-- FOOTER -->
+        <Pane layoutY="461" prefHeight="39" prefWidth="600" style="-fx-background-color: #26408B;">
+            <children>
+                <Label layoutX="439.0" layoutY="9.0" text="Colegio Horizonte" textFill="WHITE">
+                    <font>
+                        <Font name="Gill Sans MT" size="18" />
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+
+    </children>
+
+</AnchorPane>

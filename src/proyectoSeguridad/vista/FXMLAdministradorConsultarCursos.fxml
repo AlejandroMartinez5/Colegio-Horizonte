@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyectoSeguridad.controlador.FXMLAdministradorConsultarCursosController">
+    <children>
+        <Label layoutX="320.0" layoutY="30.0" text="Consultar Cursos Detalle" textFill="#26408B">
+            <font>
+                <Font name="Gill Sans MT" size="24.0" />
+            </font>
+        </Label>
+        
+        <ImageView fitHeight="136.0" fitWidth="132.0" layoutX="730.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../recursos/LogoColegio.png" />
+            </image>
+        </ImageView>
+
+        <Button fx:id="btnCerrarSesion" layoutX="580.0" layoutY="10.0" mnemonicParsing="false" onAction="#clicBotonCerrarSesion" prefHeight="37.0" prefWidth="132.0" style="-fx-background-color: #26408B; -fx-border-color: #26408B; -fx-cursor: HAND;" text="Cerrar sesión" textFill="WHITE">
+            <font>
+                <Font name="Gill Sans MT" size="14.0" />
+            </font>
+        </Button>
+
+        <Label layoutX="40.0" layoutY="90.0" text="Buscar por Clave o Nombre:" />
+        <TextField fx:id="tfBusqueda" layoutX="220.0" layoutY="85.0" onKeyReleased="#clicBuscarCurso" prefWidth="350.0" promptText="Clave de curso o nombre de materia" />
+        <Button fx:id="btnBuscar" layoutX="580.0" layoutY="85.0" mnemonicParsing="false" onAction="#clicBuscarCurso" style="-fx-background-color: #00AF4D; -fx-cursor: HAND;" text="Buscar" textFill="WHITE" />
+
+        <TableView fx:id="tvCursos" layoutX="40.0" layoutY="130.0" prefHeight="450.0" prefWidth="820.0">
+            <columns>
+                <TableColumn fx:id="colNombreMateria" prefWidth="200.0" text="Materia" />
+                <TableColumn fx:id="colClaveCurso" prefWidth="100.0" text="Clave Curso" />
+                <TableColumn fx:id="colNombreDocente" prefWidth="180.0" text="Docente Asignado" />
+                <TableColumn fx:id="colHorario" prefWidth="340.0" text="Horario y Aula" />
+            </columns>
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+            </columnResizePolicy>
+        </TableView>
+
+        <Button fx:id="btnRegistrar" layoutX="40.0" layoutY="595.0" mnemonicParsing="false" onAction="#clicBotonRegistrarCurso" prefHeight="30.0" prefWidth="180.0" style="-fx-background-color: #26408B; -fx-cursor: HAND;" text="Registrar Nuevo Curso" textFill="WHITE">
+            <font>
+                <Font name="Gill Sans MT" size="13.0" />
+            </font>
+        </Button>
+        
+        <Button fx:id="btnExportarPDF" layoutX="670.0" layoutY="595.0" mnemonicParsing="false" onAction="#clicExportarPDF" prefHeight="30.0" prefWidth="180.0" style="-fx-background-color: #E84D34; -fx-cursor: HAND;" text="Exportar a PDF" textFill="WHITE">
+            <font>
+                <Font name="Gill Sans MT" size="13.0" />
+            </font>
+        </Button>
+
+        <Pane layoutY="611.0" prefHeight="39.0" prefWidth="900.0" style="-fx-background-color: #26408B; -fx-border-color: #00AF4D;">
+            <children>
+                <Label layoutX="719.0" layoutY="9.0" text="Colegio Horizonte" textFill="WHITE">
+                    <font>
+                        <Font name="Gill Sans MT" size="18.0" />
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+    </children>
+</AnchorPane>

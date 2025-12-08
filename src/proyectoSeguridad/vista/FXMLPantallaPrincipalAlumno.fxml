@@ -1,11 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyectoSeguridad.controlador.FXMLPantallaPrincipalAlumnoController">
-    
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyectoSeguridad.controlador.FXMLPantallaPrincipalAlumnoController">
+   <children>
+      <Label fx:id="lbNombre" layoutX="70.0" layoutY="28.0" textFill="#26408b">
+         <font>
+            <Font name="Gill Sans MT" size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnCerrarSesion" layoutX="458.0" layoutY="20.0" mnemonicParsing="false" onAction="#clicBotonCerrarSesion" prefHeight="37.0" prefWidth="132.0" style="-fx-background-color: #26408B; -fx-border-color: #26408B; -fx-cursor: HAND;" text="Cerrar sesión" textFill="WHITE">
+         <font>
+            <Font name="Gill Sans MT" size="14.0" />
+         </font>
+         <graphic>
+            <ImageView fx:id="btn" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../recursos/iconoCerrarSesion.png" />
+               </image></ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="btnCalificaciones" layoutX="336.0" layoutY="171.0" mnemonicParsing="false" onAction="#clicBotonCalificaciones" prefHeight="58.0" prefWidth="173.0" style="-fx-background-color: #00AF4D; -fx-border-color: #26408B; -fx-cursor: HAND;" text="Calificaciones" textFill="WHITE">
+         <font>
+            <Font name="Gill Sans MT" size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnConsultarHorarios" layoutX="80.0" layoutY="171.0" mnemonicParsing="false" onAction="#clicBotonConsultarHorarios" prefHeight="58.0" prefWidth="173.0" style="-fx-background-color: #00AF4D; -fx-border-color: #26408B; -fx-cursor: HAND;" text="Consultar horarios" textFill="WHITE">
+         <font>
+            <Font name="Gill Sans MT" size="18.0" />
+         </font>
+      </Button>
+      <Pane layoutY="361.0" prefHeight="39.0" prefWidth="600.0" style="-fx-background-color: #26408B; -fx-border-color: #00AF4D;">
+         <children>
+            <Label layoutX="449.0" layoutY="9.0" text="Colegio Horizonte" textFill="WHITE">
+               <font>
+                  <Font name="Gill Sans MT" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane layoutX="105.0" layoutY="100.0" prefHeight="13.0" prefWidth="495.0" style="-fx-background-color: #00AF4D; -fx-border-color: #00AF4D;" />
+      <Label fx:id="lbReloj" layoutX="495.0" layoutY="337.0" textFill="#26408b">
+         <font>
+            <Font name="Gill Sans MT" size="13.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="512.0" layoutY="188.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recursos/iconoUsuario.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="261.0" layoutY="188.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recursos/iconoHorario.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="135.0" fitWidth="132.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recursos/LogoColegio.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="btnComunicaciones" layoutX="214.0" layoutY="258.0" mnemonicParsing="false" onAction="#clicBotonComunicaciones" prefHeight="58.0" prefWidth="173.0" style="-fx-background-color: #00AF4D; -fx-border-color: #26408B; -fx-cursor: HAND;" text="Comunicaciones" textFill="WHITE">
+         <font>
+            <Font name="Gill Sans MT" size="18.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="398.0" layoutY="275.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recursos/iconoComunicacion.png" />
+         </image>
+      </ImageView>
+   </children>
 </AnchorPane>

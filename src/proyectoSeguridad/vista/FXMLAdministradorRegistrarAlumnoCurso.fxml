@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyectoSeguridad.controlador.FXMLAdministradorRegistrarAlumnoCursoController">
+    <children>
+        <ImageView fitHeight="136.0" fitWidth="132.0" layoutX="500.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../recursos/LogoColegio.png" />
+            </image>
+        </ImageView>
+
+        <Label layoutX="140.0" layoutY="30.0" text="Inscribir Alumno en Curso" textFill="#26408B">
+            <font>
+                <Font name="Gill Sans MT" size="22.0" />
+            </font>
+        </Label>
+
+        <Button fx:id="btnCerrarSesion" layoutX="490.0" layoutY="10.0" mnemonicParsing="false" onAction="#clicBotonCerrarSesion" prefHeight="37.0" prefWidth="132.0" style="-fx-background-color: #26408B; -fx-border-color: #26408B; -fx-cursor: HAND;" text="Cerrar sesión" textFill="WHITE">
+            <font>
+                <Font name="Gill Sans MT" size="14.0" />
+            </font>
+            <graphic>
+                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../recursos/iconoCerrarSesion.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+
+        <Label layoutX="50" layoutY="90" text="Buscar Alumno (Matrícula/Nombre):" />
+        <TextField fx:id="tfBuscarAlumno" layoutX="50" layoutY="115" onKeyReleased="#filtrarAlumnos" prefWidth="400" promptText="Escriba aquí para buscar..." />
+        
+        <Label layoutX="50" layoutY="160" text="Seleccionar Alumno:" />
+        <ComboBox fx:id="cbAlumno" layoutX="50" layoutY="185" prefWidth="400" promptText="Seleccione el alumno de la lista filtrada" />
+
+        <Label fx:id="lbEstadoInscripcion" layoutX="50" layoutY="225" prefWidth="400" textFill="#26408B">
+            <font>
+                <Font name="Gill Sans MT" size="14.0" />
+            </font>
+        </Label>
+        
+        <Label layoutX="50" layoutY="265" text="Buscar Curso (Clave/Nombre):" />
+        <TextField fx:id="tfBuscarCurso" layoutX="50" layoutY="290" onKeyReleased="#filtrarCursos" prefWidth="400" promptText="Escriba aquí para buscar..." />
+
+        <Label layoutX="50" layoutY="335" text="Seleccionar Curso:" />
+        <ComboBox fx:id="cbCurso" layoutX="50" layoutY="360" prefWidth="400" promptText="Seleccione el curso de la lista filtrada" />
+
+
+        <Button fx:id="btnInscribir" layoutX="50.0" layoutY="415" mnemonicParsing="false" onAction="#clicBotonInscribirAlumnoCurso" prefHeight="50" prefWidth="400" style="-fx-background-color: #00AF4D; -fx-border-color: #26408B; -fx-cursor: HAND;" text="Inscribir en Curso" textFill="WHITE">
+            <font>
+                <Font name="Gill Sans MT" size="16.0" />
+            </font>
+        </Button>
+
+        <Label fx:id="lbMensaje" layoutX="50" layoutY="470" textFill="red" />
+
+        <Pane layoutY="461.0" prefHeight="39.0" prefWidth="650.0" style="-fx-background-color: #26408B; -fx-border-color: #00AF4D;">
+            <children>
+                <Label layoutX="499.0" layoutY="9.0" text="Colegio Horizonte" textFill="WHITE">
+                    <font>
+                        <Font name="Gill Sans MT" size="18.0" />
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+    </children>
+</AnchorPane>

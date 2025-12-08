@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyectoSeguridad.controlador.FXMLDocenteHorarioController">
+    <children>
+        <Label layoutX="320.0" layoutY="30.0" text="Mi Horario de Clases" textFill="#26408B">
+            <font>
+                <Font name="Gill Sans MT" size="24.0" />
+            </font>
+        </Label>
+        
+        <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="730.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../recursos/LogoColegio.png" />
+            </image>
+        </ImageView>
+
+        <Button fx:id="btnCerrarSesion" layoutX="50.0" layoutY="30.0" mnemonicParsing="false" onAction="#clicBotonCerrarSesion" prefHeight="30.0" prefWidth="120.0" style="-fx-background-color: #26408B; -fx-cursor: HAND;" text="Cerrar sesión" textFill="WHITE">
+             <font>
+                <Font name="Gill Sans MT" size="14.0" />
+            </font>
+        </Button>
+
+        <TabPane fx:id="tpDiasSemana" layoutX="50.0" layoutY="130.0" prefHeight="400.0" prefWidth="750.0" tabClosingPolicy="UNAVAILABLE" style="-fx-border-color: #26408B;">
+            <tabs>
+                <Tab text="Lunes">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <TableView fx:id="tvLunes" prefHeight="370.0" prefWidth="750.0">
+                                    <columns>
+                                        <TableColumn fx:id="colMateriaLunes" prefWidth="250.0" text="Materia" />
+                                        <TableColumn fx:id="colHoraInicioLunes" prefWidth="100.0" text="Inicio" />
+                                        <TableColumn fx:id="colHoraFinLunes" prefWidth="100.0" text="Fin" />
+                                        <TableColumn fx:id="colAulaLunes" prefWidth="100.0" text="Aula" />
+                                        <TableColumn fx:id="colClaveLunes" prefWidth="100.0" text="Clave" />
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+
+                <Tab text="Martes">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0">
+                            <children>
+                                <TableView fx:id="tvMartes" prefHeight="370.0" prefWidth="750.0">
+                                    <columns>
+                                        <TableColumn fx:id="colMateriaMartes" prefWidth="250.0" text="Materia" />
+                                        <TableColumn fx:id="colHoraInicioMartes" prefWidth="100.0" text="Inicio" />
+                                        <TableColumn fx:id="colHoraFinMartes" prefWidth="100.0" text="Fin" />
+                                        <TableColumn fx:id="colAulaMartes" prefWidth="100.0" text="Aula" />
+                                        <TableColumn fx:id="colClaveMartes" prefWidth="100.0" text="Clave" />
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+
+                <Tab text="Miércoles">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0">
+                            <children>
+                                <TableView fx:id="tvMiercoles" prefHeight="370.0" prefWidth="750.0">
+                                    <columns>
+                                        <TableColumn fx:id="colMateriaMiercoles" prefWidth="250.0" text="Materia" />
+                                        <TableColumn fx:id="colHoraInicioMiercoles" prefWidth="100.0" text="Inicio" />
+                                        <TableColumn fx:id="colHoraFinMiercoles" prefWidth="100.0" text="Fin" />
+                                        <TableColumn fx:id="colAulaMiercoles" prefWidth="100.0" text="Aula" />
+                                        <TableColumn fx:id="colClaveMiercoles" prefWidth="100.0" text="Clave" />
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+
+                <Tab text="Jueves">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0">
+                            <children>
+                                <TableView fx:id="tvJueves" prefHeight="370.0" prefWidth="750.0">
+                                    <columns>
+                                        <TableColumn fx:id="colMateriaJueves" prefWidth="250.0" text="Materia" />
+                                        <TableColumn fx:id="colHoraInicioJueves" prefWidth="100.0" text="Inicio" />
+                                        <TableColumn fx:id="colHoraFinJueves" prefWidth="100.0" text="Fin" />
+                                        <TableColumn fx:id="colAulaJueves" prefWidth="100.0" text="Aula" />
+                                        <TableColumn fx:id="colClaveJueves" prefWidth="100.0" text="Clave" />
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+
+                <Tab text="Viernes">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0">
+                            <children>
+                                <TableView fx:id="tvViernes" prefHeight="370.0" prefWidth="750.0">
+                                    <columns>
+                                        <TableColumn fx:id="colMateriaViernes" prefWidth="250.0" text="Materia" />
+                                        <TableColumn fx:id="colHoraInicioViernes" prefWidth="100.0" text="Inicio" />
+                                        <TableColumn fx:id="colHoraFinViernes" prefWidth="100.0" text="Fin" />
+                                        <TableColumn fx:id="colAulaViernes" prefWidth="100.0" text="Aula" />
+                                        <TableColumn fx:id="colClaveViernes" prefWidth="100.0" text="Clave" />
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+
+        <Pane layoutY="561.0" prefHeight="39.0" prefWidth="850.0" style="-fx-background-color: #26408B; -fx-border-color: #00AF4D;">
+            <children>
+                <Label layoutX="669.0" layoutY="9.0" text="Colegio Horizonte" textFill="WHITE">
+                    <font>
+                        <Font name="Gill Sans MT" size="18.0" />
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+    </children>
+</AnchorPane>

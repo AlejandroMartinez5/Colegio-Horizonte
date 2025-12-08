@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyectoSeguridad.controlador.FXMLDocentePantallaAlumnosController">
+   <children>
+      <!-- Logo y Título -->
+      <ImageView fitHeight="135.0" fitWidth="132.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recursos/LogoColegio.png" />
+         </image>
+      </ImageView>
+      
+      <Label fx:id="lbNombre" layoutX="160.0" layoutY="28.0" text="Gestión de Alumnos (Docente)" textFill="#26408b">
+         <font>
+            <Font name="Gill Sans MT" size="18.0" />
+         </font>
+      </Label>
+
+      <!-- Botón Cerrar/Regresar (Reutilizamos estilo de cerrar sesión para mantener consistencia) -->
+      <Button fx:id="btnRegresar" layoutX="458.0" layoutY="20.0" mnemonicParsing="false" onAction="#clicBotonRegresar" prefHeight="37.0" prefWidth="132.0" style="-fx-background-color: #26408B; -fx-border-color: #26408B; -fx-cursor: HAND;" text="Regresar" textFill="WHITE">
+         <font>
+            <Font name="Gill Sans MT" size="14.0" />
+         </font>
+      </Button>
+
+      <!-- Barra Decorativa Verde -->
+      <Pane layoutX="130.0" layoutY="100.0" prefHeight="13.0" prefWidth="470.0" style="-fx-background-color: #00AF4D; -fx-border-color: #00AF4D;" />
+
+      <!-- BOTÓN 1: Consultar Alumnos -->
+      <Button fx:id="btnConsultarAlumnos" layoutX="76.0" layoutY="180.0" mnemonicParsing="false" onAction="#clicBotonConsultarAlumnos" prefHeight="58.0" prefWidth="200.0" style="-fx-background-color: #00AF4D; -fx-border-color: #26408B; -fx-cursor: HAND;" text="Consultar Alumnos" textFill="WHITE">
+         <font>
+            <Font name="Gill Sans MT" size="18.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="37.0" fitWidth="31.0" layoutX="285.0" layoutY="194.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recursos/iconoAlumno.png" />
+         </image>
+      </ImageView>
+
+      <!-- BOTÓN 2: Subir Calificaciones -->
+      <Button fx:id="btnSubirCalificaciones" layoutX="326.0" layoutY="180.0" mnemonicParsing="false" onAction="#clicBotonSubirCalificaciones" prefHeight="58.0" prefWidth="200.0" style="-fx-background-color: #00AF4D; -fx-border-color: #26408B; -fx-cursor: HAND;" text="Subir Calificaciones" textFill="WHITE">
+         <font>
+            <Font name="Gill Sans MT" size="18.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="37.0" fitWidth="31.0" layoutX="535.0" layoutY="194.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recursos/iconoCalificaciones.png" />
+         </image>
+      </ImageView>
+
+      <!-- Reloj -->
+      <Label fx:id="lbReloj" layoutX="495.0" layoutY="337.0" textFill="#26408b">
+         <font>
+            <Font name="Gill Sans MT" size="13.0" />
+         </font>
+      </Label>
+
+      <!-- Footer -->
+      <Pane layoutY="361.0" prefHeight="39.0" prefWidth="600.0" style="-fx-background-color: #26408B; -fx-border-color: #00AF4D;">
+         <children>
+            <Label layoutX="449.0" layoutY="9.0" text="Colegio Horizonte" textFill="WHITE">
+               <font>
+                  <Font name="Gill Sans MT" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

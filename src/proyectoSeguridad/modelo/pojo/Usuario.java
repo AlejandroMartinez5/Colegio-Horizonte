@@ -11,6 +11,7 @@ public class Usuario {
     private String contrasenaHash;
     private String rol;
     private String username;
+    
     public Usuario() {
     }
 
