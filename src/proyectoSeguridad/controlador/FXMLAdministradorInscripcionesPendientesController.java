@@ -8,16 +8,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader; // <-- NECESARIO
+import javafx.fxml.FXMLLoader; 
 import javafx.fxml.Initializable;
-import javafx.scene.Parent; // <-- NECESARIO
-import javafx.scene.Scene; // <-- NECESARIO
+import javafx.scene.Parent; 
+import javafx.scene.Scene; 
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage; // <-- NECESARIO
+import javafx.stage.Stage;
 import proyectoSeguridad.modelo.dao.AlumnoDAO;
 import proyectoSeguridad.modelo.pojo.Alumno;
 import proyectoSeguridad.utilidades.Utilidad;
@@ -36,11 +36,10 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.Image;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException; // <-- NECESARIO para manejar la excepción de FXMLLoader
+import java.io.IOException; 
 
 public class FXMLAdministradorInscripcionesPendientesController implements Initializable {
     
-    // RUTA DEL LOGO (Usando la misma ruta absoluta)
     private static final String RUTA_LOGO = "D:\\Documents\\Capa\\NetBeanss\\Proyecto_Seguridad\\src\\proyectoSeguridad\\recursos\\LogoColegio.png";
 
     @FXML private Button btnCerrarSesion;
@@ -107,7 +106,6 @@ public class FXMLAdministradorInscripcionesPendientesController implements Initi
         fileChooser.setTitle("Guardar Reporte de Inscripciones Pendientes");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF Files", "*.pdf"));
         
-        // Obtener la Stage actual
         Stage stage = (Stage) btnExportarPDF.getScene().getWindow();
         File file = fileChooser.showSaveDialog(stage); 
 
@@ -132,7 +130,6 @@ public class FXMLAdministradorInscripcionesPendientesController implements Initi
         PdfWriter.getInstance(document, new FileOutputStream(file));
         document.open();
 
-        // ----------------- CARGAR Y AÑADIR LOGO -----------------
         try {
             Image img = Image.getInstance(RUTA_LOGO);
             img.scaleAbsolute(50, 50); 
@@ -180,8 +177,6 @@ public class FXMLAdministradorInscripcionesPendientesController implements Initi
         for (Alumno alumno : listaAlumnosPendientes) {
             String nombreCompleto = "";
             try {
-                // Hay que llamar al DAO nuevamente para obtener el nombre completo, 
-                // ya que la lista solo tiene objetos Alumno y no el nombre ya resuelto.
                 nombreCompleto = AlumnoDAO.obtenerNombreCompleto(alumno.getIdUsuario());
             } catch (SQLException e) {
                 nombreCompleto = "Error al obtener nombre";
@@ -208,17 +203,14 @@ public class FXMLAdministradorInscripcionesPendientesController implements Initi
     private void clicBotonCerrarSesion(ActionEvent event) {
         if (Utilidad.mostrarAlertaConfirmacion("Cerrar Sesión", "¿Está seguro que desea cerrar la sesión y volver al login?")) {
             try {
-                // 1. Cargar el FXML de Inicio de Sesión
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/proyectoSeguridad/vista/FXMLInicioSesion.fxml"));
                 Parent root = loader.load();
                 
-                // 2. Abrir la nueva Stage (Login)
                 Stage stageNueva = new Stage();
                 stageNueva.setScene(new Scene(root));
                 stageNueva.setTitle("Inicio de Sesión");
                 stageNueva.show(); 
-                
-                // 3. Obtener la Stage actual y CERRARLA
+             
                 Stage stageActual = (Stage) btnCerrarSesion.getScene().getWindow();
                 stageActual.close();
 

@@ -34,7 +34,6 @@ public class FXMLAdministradorConsultarDocenteCursoController implements Initial
     @FXML
     private Button btnBuscar;
     
-    // Suponiendo que agregas este botón a tu FXML para volver a la ventana anterior
     @FXML
     private Button btnVolver; 
 
@@ -62,9 +61,7 @@ public class FXMLAdministradorConsultarDocenteCursoController implements Initial
                 limpiarLabels();
                 return;
             }
-
-            // Mostrar los datos en los labels
-            // Usamos .getOrDefault para manejar posibles valores nulos o claves faltantes
+            
             lbNombreMateria.setText(datos.getOrDefault("nombreMateria", "N/A"));
             lbClaveCurso.setText(datos.getOrDefault("claveCurso", "N/A"));
             lbNombreDocente.setText(datos.getOrDefault("nombreDocente", "N/A"));
@@ -88,17 +85,9 @@ public class FXMLAdministradorConsultarDocenteCursoController implements Initial
         lbUsernameDocente.setText("---");
     }
     
-    /**
-     * Cierra la ventana actual para regresar a la ventana que la invocó.
-     * Este método se debe usar en un botón de "Regresar" o "Volver" en el FXML.
-     * @param event 
-     */
     @FXML
     private void clicBotonVolver(ActionEvent event) {
-        // Obtiene la Stage (ventana) actual a partir del botón que disparó el evento
-        Stage stageActual = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        
-        // Cierra la ventana, regresando a la anterior que sigue abierta.
+        Stage stageActual = (Stage) ((Button) event.getSource()).getScene().getWindow();    
         stageActual.close();
     }
 }

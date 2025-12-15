@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="Proyecto_Seguridad.jar" size="1547189" download="eager" />
+    <jar href="Proyecto_Seguridad.jar" size="1548060" download="eager" />
     <jar href="lib\itextpdf-5.5.13.3.jar" size="2334491" download="eager" />
     <jar href="lib\mysql-connector-java-8.0.20.jar" size="2385601" download="eager" />
   </resources>

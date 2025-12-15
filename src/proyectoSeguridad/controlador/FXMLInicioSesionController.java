@@ -86,7 +86,9 @@ public class FXMLInicioSesionController implements Initializable {
 
     private void validarCredenciales(String username, String password) {
         try {
-            Usuario usuarioSesion = InicioDeSesionDAO.verificarCredenciales(username, password);
+            String passwordHasheada = Utilidad.calcularHash(password);
+
+            Usuario usuarioSesion = InicioDeSesionDAO.verificarCredenciales(username, passwordHasheada);
 
             if (usuarioSesion != null) {
                 Utilidad.mostrarAlertaSimple(
@@ -158,7 +160,7 @@ public class FXMLInicioSesionController implements Initializable {
 
         // Obtenemos el controlador y pasamos el usuario
         FXMLPantallaPrincipalDocenteController controlador = cargador.getController();
-        controlador.inicializarInformacion(usuarioSesion); // <--- AQUÍ SE PASA EL USUARIO
+        controlador.inicializarInformacion(usuarioSesion); 
 
         Scene escenaPrincipal = new Scene(vista);
         escenarioBase.setScene(escenaPrincipal);
@@ -173,7 +175,7 @@ public class FXMLInicioSesionController implements Initializable {
 
         // Obtenemos el controlador y pasamos el usuario
         FXMLPantallaPrincipalAlumnoController controlador = cargador.getController();
-        controlador.inicializarInformacion(usuarioSesion); // <--- AQUÍ SE PASA EL USUARIO
+        controlador.inicializarInformacion(usuarioSesion); 
 
         Scene escenaPrincipal = new Scene(vista);
         escenarioBase.setScene(escenaPrincipal);
@@ -186,9 +188,8 @@ public class FXMLInicioSesionController implements Initializable {
         FXMLLoader cargador = new FXMLLoader(getClass().getResource(fxmlPath));
         Parent vista = cargador.load();
 
-        // Obtenemos el controlador y pasamos el usuario
         FXMLPantallaPrincipalAdministradorController controlador = cargador.getController();
-        controlador.inicializarInformacion(usuarioSesion); // <--- AQUÍ SE PASA EL USUARIO
+        controlador.inicializarInformacion(usuarioSesion); 
 
         Scene escenaPrincipal = new Scene(vista);
         escenarioBase.setScene(escenaPrincipal);

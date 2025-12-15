@@ -14,7 +14,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage; // Eliminamos Modality y solo usamos Stage
+import javafx.stage.Stage; 
 import proyectoSeguridad.modelo.dao.AlumnoDAO;
 import proyectoSeguridad.modelo.pojo.Alumno;
 import proyectoSeguridad.modelo.pojo.Usuario;
@@ -39,40 +39,26 @@ public class FXMLPantallaPrincipalAlumnoController implements Initializable {
     @FXML
     private Button btnComunicaciones;
 
-    // Atributos de sesión
     private Usuario usuarioSesion;
     private int idAlumno;
 
-    /**
-     * Initializes the controller class.
-     */
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // Inicializaciones básicas si fueran necesarias antes de recibir el usuario
     }    
 
-    // --- Lógica de Inicialización (Conexión con Login) ---
-
-    /**
-     * Recibe el usuario del Login e inicializa la pantalla.
-     * @param usuario El usuario que inició sesión.
-     */
     public void inicializarInformacion(Usuario usuario) {
         this.usuarioSesion = usuario;
         
-        // Mostrar nombre en pantalla
         lbNombre.setText("Hola, " + usuario.getNombre() + " " + usuario.getApellido());
         
-        // Iniciar el reloj
         Utilidad.mostrarHora(lbReloj);
         
-        // Cargar el ID de Alumno desde la BD
         cargarIdAlumno();
     }
 
     private void cargarIdAlumno() {
         try {
-            // Buscamos al alumno usando el ID de Usuario
             Alumno alumno = AlumnoDAO.obtenerAlumnoPorIdUsuario(usuarioSesion.getIdUsuario());
             
             if (alumno != null) {
@@ -88,7 +74,6 @@ public class FXMLPantallaPrincipalAlumnoController implements Initializable {
         }
     }
 
-    // --- Métodos de Botones ---
 
     @FXML
     private void clicBotonCerrarSesion(ActionEvent event) {
@@ -111,26 +96,19 @@ public class FXMLPantallaPrincipalAlumnoController implements Initializable {
         }
     }
 
-    /**
-     * CORREGIDO: Abre la ventana de consulta de calificaciones en una NUEVA Stage (apilamiento libre).
-     */
     @FXML
     private void clicBotonCalificaciones(ActionEvent event) {
         if (idAlumno > 0) {
             try {
-                // 1. Cargar el FXML de la ventana de consulta
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/proyectoSeguridad/vista/FXMLAlumnoConsultarCalificaciones.fxml"));
                 Parent root = loader.load();
 
-                // 2. Obtener el controlador y pasar el ID
                 FXMLAlumnoConsultarCalificacionesController controlador = loader.getController();
                 controlador.setIdAlumno(this.idAlumno);
 
-                // 3. Mostrar la ventana en una nueva Stage
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
                 stage.setTitle("Mis Calificaciones");
-                // *** CORRECCIÓN: Quitamos la modalidad para permitir el apilamiento libre ***
                 stage.show(); 
 
             } catch (IOException ex) {
@@ -142,9 +120,6 @@ public class FXMLPantallaPrincipalAlumnoController implements Initializable {
         }
     }
 
-    /**
-     * CORREGIDO: Abre la ventana de Horarios en una NUEVA Stage (apilamiento libre).
-     */
     @FXML
     private void clicBotonConsultarHorarios(ActionEvent event) {
         if (idAlumno > 0) {
@@ -158,7 +133,6 @@ public class FXMLPantallaPrincipalAlumnoController implements Initializable {
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
                 stage.setTitle("Mi Horario");
-                // *** CORRECCIÓN: Quitamos la modalidad para permitir el apilamiento libre ***
                 stage.show();
 
             } catch (IOException ex) {
@@ -172,13 +146,9 @@ public class FXMLPantallaPrincipalAlumnoController implements Initializable {
 
     @FXML
     private void clicBotonInscripciones(ActionEvent event) {
-        // TODO: Lógica para inscripciones
         Utilidad.mostrarAlertaSimple(Alert.AlertType.INFORMATION, "Próximamente", "Módulo de Inscripciones en construcción.");
     }
-
-    /**
-     * CORREGIDO: Abre la ventana de Comunicados en una NUEVA Stage (apilamiento libre).
-     */
+    
     @FXML
     private void clicBotonComunicaciones(ActionEvent event) {
         try {
@@ -188,7 +158,6 @@ public class FXMLPantallaPrincipalAlumnoController implements Initializable {
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.setTitle("Avisos y Comunicados");
-            // *** CORRECCIÓN: Quitamos la modalidad para permitir el apilamiento libre ***
             stage.show();
 
         } catch (IOException ex) {

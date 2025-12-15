@@ -250,8 +250,6 @@ public class AlumnoDAO {
     
     public static List<Alumno> obtenerAlumnosPendientes() throws SQLException {
         List<Alumno> alumnosPendientes = new ArrayList<>();
-        // En este caso, si necesitas el nombre para mostrarlo en la lista de pendientes, 
-        // también deberías hacer el JOIN, aunque aquí lo dejo simple según tu original.
         String consulta = 
             "SELECT a.*, u.Nombre, u.Apellido " + 
             "FROM Alumnos a " +

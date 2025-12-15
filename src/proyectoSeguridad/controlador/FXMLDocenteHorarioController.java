@@ -1,6 +1,6 @@
 package proyectoSeguridad.controlador;
 
-import java.io.IOException; // NECESARIO
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
@@ -10,26 +10,24 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader; // NECESARIO
+import javafx.fxml.FXMLLoader; 
 import javafx.fxml.Initializable;
-import javafx.scene.Parent; // NECESARIO
-import javafx.scene.Scene; // NECESARIO
-import javafx.scene.control.Alert.AlertType; // NECESARIO
+import javafx.scene.Parent; 
+import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.stage.Stage; // NECESARIO
+import javafx.stage.Stage; 
 import proyectoSeguridad.modelo.dao.HorarioDAO;
 import proyectoSeguridad.utilidades.Utilidad;
 
 public class FXMLDocenteHorarioController implements Initializable {
 
-    // --- Atributos FXML ---
     @FXML private Button btnCerrarSesion;
     @FXML private TabPane tpDiasSemana;
 
-    // Lunes
     @FXML private TableView<Map<String, Object>> tvLunes;
     @FXML private TableColumn<Map<String, Object>, String> colMateriaLunes;
     @FXML private TableColumn<Map<String, Object>, String> colHoraInicioLunes;
@@ -37,7 +35,6 @@ public class FXMLDocenteHorarioController implements Initializable {
     @FXML private TableColumn<Map<String, Object>, String> colAulaLunes;
     @FXML private TableColumn<Map<String, Object>, String> colClaveLunes;
 
-    // Martes
     @FXML private TableView<Map<String, Object>> tvMartes;
     @FXML private TableColumn<Map<String, Object>, String> colMateriaMartes;
     @FXML private TableColumn<Map<String, Object>, String> colHoraInicioMartes;
@@ -45,7 +42,6 @@ public class FXMLDocenteHorarioController implements Initializable {
     @FXML private TableColumn<Map<String, Object>, String> colAulaMartes;
     @FXML private TableColumn<Map<String, Object>, String> colClaveMartes;
 
-    // Miércoles
     @FXML private TableView<Map<String, Object>> tvMiercoles;
     @FXML private TableColumn<Map<String, Object>, String> colMateriaMiercoles;
     @FXML private TableColumn<Map<String, Object>, String> colHoraInicioMiercoles;
@@ -53,7 +49,6 @@ public class FXMLDocenteHorarioController implements Initializable {
     @FXML private TableColumn<Map<String, Object>, String> colAulaMiercoles;
     @FXML private TableColumn<Map<String, Object>, String> colClaveMiercoles;
 
-    // Jueves
     @FXML private TableView<Map<String, Object>> tvJueves;
     @FXML private TableColumn<Map<String, Object>, String> colMateriaJueves;
     @FXML private TableColumn<Map<String, Object>, String> colHoraInicioJueves;
@@ -61,7 +56,6 @@ public class FXMLDocenteHorarioController implements Initializable {
     @FXML private TableColumn<Map<String, Object>, String> colAulaJueves;
     @FXML private TableColumn<Map<String, Object>, String> colClaveJueves;
 
-    // Viernes
     @FXML private TableView<Map<String, Object>> tvViernes;
     @FXML private TableColumn<Map<String, Object>, String> colMateriaViernes;
     @FXML private TableColumn<Map<String, Object>, String> colHoraInicioViernes;
@@ -69,15 +63,13 @@ public class FXMLDocenteHorarioController implements Initializable {
     @FXML private TableColumn<Map<String, Object>, String> colAulaViernes;
     @FXML private TableColumn<Map<String, Object>, String> colClaveViernes;
 
-    // Listas observables por día
     private ObservableList<Map<String, Object>> listaLunes = FXCollections.observableArrayList();
     private ObservableList<Map<String, Object>> listaMartes = FXCollections.observableArrayList();
     private ObservableList<Map<String, Object>> listaMiercoles = FXCollections.observableArrayList();
     private ObservableList<Map<String, Object>> listaJueves = FXCollections.observableArrayList();
     private ObservableList<Map<String, Object>> listaViernes = FXCollections.observableArrayList();
     
-    // ID del Docente logueado (Simulado)
-    private int idDocenteLogueado = 1; // DEBES CAMBIAR ESTO POR LA SESIÓN REAL
+    private int idDocenteLogueado = 1; 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -85,10 +77,7 @@ public class FXMLDocenteHorarioController implements Initializable {
         cargarHorarios();
     }
 
-    /**
-     * Configura las columnas para leer los datos del Mapa.
-     * Esto se repite para cada tabla para asegurar el binding correcto.
-     */
+
     private void configurarTodasLasTablas() {
         configurarColumnas(colMateriaLunes, colHoraInicioLunes, colHoraFinLunes, colAulaLunes, colClaveLunes);
         configurarColumnas(colMateriaMartes, colHoraInicioMartes, colHoraFinMartes, colAulaMartes, colClaveMartes);
@@ -125,10 +114,8 @@ public class FXMLDocenteHorarioController implements Initializable {
         listaViernes.clear();
 
         try {
-            // Obtener todos los horarios del docente
             List<Map<String, Object>> todosHorarios = HorarioDAO.obtenerHorariosDeDocente(idDocenteLogueado);
     
-            // Clasificar por día
             for (Map<String, Object> horario : todosHorarios) {
                 String dia = (String) horario.get("diaSemana");
                 if (dia == null) continue;
@@ -147,24 +134,20 @@ public class FXMLDocenteHorarioController implements Initializable {
             e.printStackTrace();
         }
     }
-    
-    // --- Lógica de Navegación ---
+
     
     @FXML
     private void clicBotonCerrarSesion(ActionEvent event) {
         if (Utilidad.mostrarAlertaConfirmacion("Cerrar Sesión", "¿Desea cerrar la sesión y volver al login?")) {
             try {
-                // 1. Cargar el FXML de Inicio de Sesión
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/proyectoSeguridad/vista/FXMLInicioSesion.fxml"));
                 Parent root = loader.load();
                 
-                // 2. Abrir la nueva Stage (Login)
                 Stage stageNueva = new Stage();
                 stageNueva.setScene(new Scene(root));
                 stageNueva.setTitle("Inicio de Sesión");
                 stageNueva.show(); 
-                
-                // 3. Obtener la Stage actual y CERRARLA
+
                 Stage stageActual = (Stage) btnCerrarSesion.getScene().getWindow();
                 stageActual.close();
 
@@ -174,10 +157,9 @@ public class FXMLDocenteHorarioController implements Initializable {
             }
         }
     }
-    
-    // Método para establecer el docente desde el Login
+
     public void setDocente(int idDocente) {
         this.idDocenteLogueado = idDocente;
-        cargarHorarios(); // Recargar datos si cambia el docente
+        cargarHorarios(); 
     }
 }

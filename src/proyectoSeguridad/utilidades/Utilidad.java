@@ -4,6 +4,8 @@
  */
 package proyectoSeguridad.utilidades;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import javafx.animation.KeyFrame;
@@ -66,5 +68,25 @@ public class Utilidad {
         
         // Retorna la fecha formateada
         return dtf.format(now);
+    }
+    
+    public static String calcularHash(String contrasena) {
+        try {
+            // Usamos SHA-256, un estándar seguro para proyectos académicos/medianos
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(contrasena.getBytes(StandardCharsets.UTF_8));
+            
+            // Convertimos los bytes a representación Hexadecimal
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hash) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

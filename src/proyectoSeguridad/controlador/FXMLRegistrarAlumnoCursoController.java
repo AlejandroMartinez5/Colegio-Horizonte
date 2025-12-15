@@ -11,16 +11,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader; // NECESARIO
+import javafx.fxml.FXMLLoader; 
 import javafx.fxml.Initializable;
-import javafx.scene.Parent; // NECESARIO
-import javafx.scene.Scene; // NECESARIO
+import javafx.scene.Parent; 
+import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage; // NECESARIO
+import javafx.stage.Stage; 
 import proyectoSeguridad.modelo.dao.AlumnoCursoDAO;
 import proyectoSeguridad.modelo.dao.AlumnoDAO;
 import proyectoSeguridad.modelo.dao.CursoDAO;
@@ -31,7 +31,6 @@ import proyectoSeguridad.utilidades.Utilidad;
 
 public class FXMLRegistrarAlumnoCursoController implements Initializable {
 
-    // --- Atributos FXML ---
     @FXML
     private Button btnCerrarSesion;
     @FXML
@@ -43,13 +42,11 @@ public class FXMLRegistrarAlumnoCursoController implements Initializable {
     @FXML
     private Label lbMensaje;
     @FXML
-    private Label lbEstadoInscripcion; // Para mostrar si la inscripción está pagada o pendiente
-    
-    // Suponiendo que se añade un botón de Volver/Regresar en el FXML
+    private Label lbEstadoInscripcion; 
+
     @FXML
     private Button btnVolver;
 
-    // Mapas para el ID interno
     private Map<String, Integer> mapaAlumnos;
     private Map<String, Integer> mapaCursos;
 
@@ -61,7 +58,6 @@ public class FXMLRegistrarAlumnoCursoController implements Initializable {
         cargarAlumnos();
         cargarCursos();
         
-        // Listener para verificar el estado de inscripción cuando se selecciona un alumno
         cbAlumno.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 verificarEstadoInscripcion(newValue);
@@ -73,16 +69,11 @@ public class FXMLRegistrarAlumnoCursoController implements Initializable {
 
     private void cargarAlumnos() {
         try {
-            // NOTA: Si esta vista es solo para el administrador (como sugiere el nombre), 
-            // debería usar AlumnoDAO.obtenerTodosLosAlumnosConDetalle(), 
-            // no solo los pendientes (obtenerAlumnosPendientes).
             List<proyectoSeguridad.modelo.pojo.Alumno> alumnos = AlumnoDAO.obtenerAlumnosPendientes(); 
             ObservableList<String> items = FXCollections.observableArrayList();
 
             for (proyectoSeguridad.modelo.pojo.Alumno alumno : alumnos) {
-                // NOTA: Se asume que AlumnoDAO.obtenerNombreCompleto() accede a UsuarioDAO, 
-                // lo cual puede ser costoso. Se recomienda usar una vista/consulta detallada
-                // que traiga el nombre y apellido directamente.
+
                 String nombre = AlumnoDAO.obtenerNombreCompleto(alumno.getIdUsuario());
                 String itemDisplay = nombre + " (" + alumno.getMatricula() + ")";
                 
@@ -135,8 +126,6 @@ public class FXMLRegistrarAlumnoCursoController implements Initializable {
         }
     }
 
-    // --- Métodos de Acción ---
-
     @FXML
     private void clicBotonInscribirAlumnoCurso(ActionEvent event) {
         String alumnoSeleccionado = cbAlumno.getSelectionModel().getSelectedItem();
@@ -155,22 +144,19 @@ public class FXMLRegistrarAlumnoCursoController implements Initializable {
             lbMensaje.setText("Error al obtener IDs internos. Recargue la ventana.");
             return;
         }
-        
-        // Re-verificación de pago si el botón se habilitó manualmente
+
         if (btnInscribir.isDisable()) {
              Utilidad.mostrarAlertaSimple(AlertType.WARNING, "Pago Pendiente", "No se puede inscribir: el pago del alumno está pendiente.");
              return;
         }
 
         try {
-            // 1. Verificar si ya existe la inscripción
             if (AlumnoCursoDAO.existeInscripcion(idCurso, idAlumno)) {
                 lbMensaje.setText("El alumno ya está inscrito en este curso.");
                 Utilidad.mostrarAlertaSimple(AlertType.WARNING, "Inscripción Duplicada", "El alumno ya se encuentra inscrito en el curso seleccionado.");
                 return;
             }
             
-            // 2. Registrar inscripción
             AlumnoCurso ac = new AlumnoCurso(0, idCurso, idAlumno);
             ResultadoOperacion resultado = AlumnoCursoDAO.registrarAlumnoEnCurso(ac);
 
@@ -189,28 +175,19 @@ public class FXMLRegistrarAlumnoCursoController implements Initializable {
             e.printStackTrace();
         }
     }
-
-    // --- Métodos de Navegación ---
     
-    /**
-     * Cierra la sesión: abre la ventana de Login y cierra la ventana actual.
-     * @param event 
-     */
     @FXML
     private void clicBotonCerrarSesion(ActionEvent event) {
         if (Utilidad.mostrarAlertaConfirmacion("Cerrar Sesión", "¿Está seguro que desea cerrar la sesión y volver al login?")) {
             try {
-                // 1. Cargar el FXML de Inicio de Sesión
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/proyectoSeguridad/vista/FXMLInicioSesion.fxml"));
                 Parent root = loader.load();
                 
-                // 2. Abrir la nueva Stage (Login)
                 Stage stageNueva = new Stage();
                 stageNueva.setScene(new Scene(root));
                 stageNueva.setTitle("Inicio de Sesión");
                 stageNueva.show(); 
                 
-                // 3. Obtener la Stage actual y CERRARLA
                 Stage stageActual = (Stage) btnCerrarSesion.getScene().getWindow();
                 stageActual.close();
 
@@ -220,28 +197,18 @@ public class FXMLRegistrarAlumnoCursoController implements Initializable {
             }
         }
     }
-    
-    /**
-     * Cierra la ventana actual para regresar a la ventana que la invocó.
-     * (Asumiendo que se añade un botón de Volver/Regresar en el FXML, con fx:id="btnVolver").
-     * @param event 
-     */
+
     @FXML
     private void clicBotonVolver(ActionEvent event) {
-        // Obtenemos el botón que disparó el evento (asumiendo que se llama btnVolver)
         Stage stageActual = (Stage) ((Button) event.getSource()).getScene().getWindow();
         stageActual.close();
     }
-
-
-    // --- Métodos Auxiliares ---
     
     private void limpiarCampos() {
         cbAlumno.getSelectionModel().clearSelection();
         cbCurso.getSelectionModel().clearSelection();
         lbMensaje.setText("");
         lbEstadoInscripcion.setText("");
-        // Al limpiar, volvemos a deshabilitar el botón si no hay selección
         btnInscribir.setDisable(true); 
     }
 }

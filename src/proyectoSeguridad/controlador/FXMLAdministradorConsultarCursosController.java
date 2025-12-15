@@ -44,10 +44,8 @@ import proyectoSeguridad.utilidades.Utilidad;
 
 public class FXMLAdministradorConsultarCursosController implements Initializable {
     
-    // RUTA DEL LOGO (Actualizada con la ruta que proporcionaste)
     private static final String RUTA_LOGO = "D:\\Documents\\Capa\\NetBeanss\\Proyecto_Seguridad\\src\\proyectoSeguridad\\recursos\\LogoColegio.png";
 
-    // Atributos FXML de la tabla
     @FXML private TextField tfBusqueda;
     @FXML private TableView<CursoDetalle> tvCursos;
     @FXML private TableColumn<CursoDetalle, String> colNombreMateria;
@@ -55,16 +53,13 @@ public class FXMLAdministradorConsultarCursosController implements Initializable
     @FXML private TableColumn<CursoDetalle, String> colNombreDocente; 
     @FXML private TableColumn<CursoDetalle, String> colHorario;     
     
-    // Atributos FXML de botones
     @FXML private Button btnCerrarSesion;
     @FXML private Button btnRegistrar;
     @FXML private Button btnBuscar;
     @FXML private Button btnExportarPDF;
     
-    // Lista observable para la TableView
     private ObservableList<CursoDetalle> listaCursos;
 
-    // --- Inicialización ---
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -100,7 +95,6 @@ public class FXMLAdministradorConsultarCursosController implements Initializable
         }
     }
 
-    // --- Métodos de Acción ---
 
     @FXML
     private void clicBuscarCurso(ActionEvent event) {
@@ -108,11 +102,6 @@ public class FXMLAdministradorConsultarCursosController implements Initializable
         cargarCursos(textoBusqueda);
     }
 
-    /**
-     * CORREGIDO: Abre la ventana de registro de curso en una NUEVA Stage 
-     * sin cerrar la ventana actual (Consulta de Cursos).
-     * @param event 
-     */
     @FXML
     private void clicBotonRegistrarCurso(ActionEvent event) {
         try {
@@ -121,12 +110,10 @@ public class FXMLAdministradorConsultarCursosController implements Initializable
             
             Scene scene = new Scene(root);
             
-            // 1. Crear una NUEVA Stage
             Stage stageNueva = new Stage();
             stageNueva.setScene(scene);
             stageNueva.setTitle("Registrar Nuevo Curso y Horarios");
             
-            // 2. Mostrar la nueva Stage. La ventana actual (Consulta de Cursos) NO se cierra.
             stageNueva.show();
             
         } catch (IOException ex) {
@@ -134,8 +121,7 @@ public class FXMLAdministradorConsultarCursosController implements Initializable
             ex.printStackTrace();
         }
     }
-    
-    // --- Lógica de Exportación a PDF (Incluye Logo) ---
+
 
     @FXML
     private void clicExportarPDF(ActionEvent event) {
@@ -171,31 +157,24 @@ public class FXMLAdministradorConsultarCursosController implements Initializable
         PdfWriter.getInstance(document, new FileOutputStream(file));
         document.open();
 
-        // ----------------- CARGAR Y AÑADIR LOGO -----------------
         try {
-            // Usa la ruta de archivo directo proporcionada por el usuario
             Image img = Image.getInstance(RUTA_LOGO);
-            
-            // Ajustar tamaño del logo
+
             img.scaleAbsolute(50, 50);  
-            
-            // Posicionar el logo (arriba a la derecha)
+           
             img.setAbsolutePosition(
                 document.getPageSize().getWidth() - document.rightMargin() - 60, 
                 document.getPageSize().getHeight() - document.topMargin() - 50  
             );
             document.add(img);
         } catch (Exception e) {
-            // Si el logo falla, continúa generando el PDF sin él
+
             System.err.println("Advertencia: No se pudo cargar el logo del colegio. Verifique la ruta: " + RUTA_LOGO);
         }
-        // ----------------- FIN LOGO -----------------
 
-        // Fuentes y Estilos
         Font fontTitulo = new Font(Font.FontFamily.HELVETICA, 16, Font.BOLD);
         Font fontHeader = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD);
 
-        // Título (Añade espacio para el logo)
         Paragraph titulo = new Paragraph("REPORTE DE CURSOS DETALLADOS", fontTitulo);
         titulo.setAlignment(Element.ALIGN_CENTER);
         
@@ -204,27 +183,24 @@ public class FXMLAdministradorConsultarCursosController implements Initializable
         document.add(titulo);
         document.add(new Paragraph(" "));
         
-        // Resumen
+
         String busqueda = tfBusqueda.getText().trim().isEmpty() ? "Búsqueda: Todos los cursos" : "Búsqueda: " + tfBusqueda.getText().trim();
         document.add(new Paragraph(busqueda));
         document.add(new Paragraph(" "));
 
-        // Tabla (4 columnas)
+
         PdfPTable table = new PdfPTable(4); 
         table.setWidthPercentage(100); 
         table.setSpacingBefore(10f);
         
-        // Ajuste de ancho de columnas
         float[] columnWidths = {2.0f, 1.0f, 1.5f, 3.0f};
         table.setWidths(columnWidths);
 
-        // Encabezados de la tabla
         agregarHeader(table, "Materia", fontHeader);
         agregarHeader(table, "Clave Curso", fontHeader);
         agregarHeader(table, "Docente Asignado", fontHeader);
         agregarHeader(table, "Horario y Aula", fontHeader);
 
-        // Llenar la tabla con los datos
         for (CursoDetalle curso : listaCursos) {
             table.addCell(curso.getNombreMateria());
             table.addCell(curso.getClaveCurso());
@@ -242,13 +218,7 @@ public class FXMLAdministradorConsultarCursosController implements Initializable
         header.setVerticalAlignment(Element.ALIGN_MIDDLE);
         table.addCell(header);
     }
-    
 
-    /**
-     * Cierra la sesión: abre la ventana de Login y cierra la ventana actual.
-     * (Esta lógica ya estaba correcta)
-     * @param event 
-     */
     @FXML
     private void clicBotonCerrarSesion(ActionEvent event) {
         if (Utilidad.mostrarAlertaConfirmacion("Cerrar Sesión", "¿Está seguro que desea cerrar la sesión y volver al login?")) {

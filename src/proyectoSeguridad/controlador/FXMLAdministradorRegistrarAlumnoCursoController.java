@@ -1,6 +1,6 @@
 package proyectoSeguridad.controlador;
 
-import java.io.IOException; // Necesario para FXMLLoader
+import java.io.IOException; 
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -12,16 +12,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader; // NECESARIO
+import javafx.fxml.FXMLLoader; 
 import javafx.fxml.Initializable;
-import javafx.scene.Parent; // NECESARIO
-import javafx.scene.Scene; // NECESARIO
+import javafx.scene.Parent; 
+import javafx.scene.Scene; 
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage; // NECESARIO
+import javafx.stage.Stage;
 import proyectoSeguridad.modelo.dao.AlumnoCursoDAO;
 import proyectoSeguridad.modelo.dao.AlumnoDAO;
 import proyectoSeguridad.modelo.dao.CursoDAO;
@@ -49,16 +49,12 @@ public class FXMLAdministradorRegistrarAlumnoCursoController implements Initiali
     private Label lbMensaje;
     @FXML
     private Label lbEstadoInscripcion; 
-    
-    // Suponiendo que se añade un botón de Volver/Regresar en el FXML
+
     @FXML
     private Button btnVolver;
 
-    // Mapas para el ID interno
     private Map<String, Integer> mapaAlumnos;
     private Map<String, Integer> mapaCursos;
-    
-    // Listas completas para la funcionalidad de búsqueda/filtrado
     private ObservableList<String> listaCompletaAlumnos;
     private ObservableList<String> listaCompletaCursos;
 
@@ -72,28 +68,24 @@ public class FXMLAdministradorRegistrarAlumnoCursoController implements Initiali
         cargarAlumnos(); 
         cargarCursos();
         
-        // Listener para verificar el estado de inscripción cuando se selecciona un alumno
         cbAlumno.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 verificarEstadoInscripcion(newValue);
             } else {
                 lbEstadoInscripcion.setText("");
-                btnInscribir.setDisable(true); // Deshabilitar si no hay selección
+                btnInscribir.setDisable(true); 
             }
         });
-        
-        // Inicialmente deshabilitar el botón de inscripción
+
         btnInscribir.setDisable(true); 
     }
 
-    // --- Lógica de Carga y Filtrado (Sin cambios, es correcta para la funcionalidad) ---
 
     private void cargarAlumnos() {
         listaCompletaAlumnos.clear();
         mapaAlumnos.clear();
         
         try {
-            // *** CORRECCIÓN CLAVE: Usamos el nuevo método que trae TODOS los alumnos con detalle ***
             List<proyectoSeguridad.modelo.pojo.Alumno> alumnos = AlumnoDAO.obtenerTodosLosAlumnosConDetalle(); 
 
             for (proyectoSeguridad.modelo.pojo.Alumno alumno : alumnos) {
@@ -104,7 +96,6 @@ public class FXMLAdministradorRegistrarAlumnoCursoController implements Initiali
                 listaCompletaAlumnos.add(itemDisplay);
                 mapaAlumnos.put(itemDisplay, alumno.getIdAlumno());
             }
-            // Inicialmente, el ComboBox muestra la lista completa
             cbAlumno.setItems(listaCompletaAlumnos);
             
         } catch (SQLException e) {
@@ -172,8 +163,6 @@ public class FXMLAdministradorRegistrarAlumnoCursoController implements Initiali
         }
     }
     
-    // --- Lógica de Negocio (Sin cambios, es correcta para la funcionalidad) ---
-    
     private void verificarEstadoInscripcion(String alumnoSeleccionado) {
         Integer idAlumno = mapaAlumnos.get(alumnoSeleccionado);
         if (idAlumno == null) return;
@@ -228,14 +217,12 @@ public class FXMLAdministradorRegistrarAlumnoCursoController implements Initiali
 
 
         try {
-            // 1. Verificar si ya existe la inscripción
             if (AlumnoCursoDAO.existeInscripcion(idCurso, idAlumno)) {
                 lbMensaje.setText("El alumno ya está inscrito en este curso.");
                 Utilidad.mostrarAlertaSimple(AlertType.WARNING, "Inscripción Duplicada", "El alumno ya se encuentra inscrito en el curso seleccionado.");
                 return;
             }
 
-            // 2. Registrar inscripción
             AlumnoCurso ac = new AlumnoCurso(0, idCurso, idAlumno);
             ResultadoOperacion resultado = AlumnoCursoDAO.registrarAlumnoEnCurso(ac);
 
@@ -255,12 +242,6 @@ public class FXMLAdministradorRegistrarAlumnoCursoController implements Initiali
         }
     }
 
-    // --- Métodos de Navegación ---
-    
-    /**
-     * Cierra la sesión: abre la ventana de Login y cierra la ventana actual.
-     * @param event 
-     */
     @FXML
     private void clicBotonCerrarSesion(ActionEvent event) {
         if (Utilidad.mostrarAlertaConfirmacion("Cerrar Sesión", "¿Está seguro que desea cerrar la sesión y volver al login?")) {
@@ -285,21 +266,13 @@ public class FXMLAdministradorRegistrarAlumnoCursoController implements Initiali
             }
         }
     }
-    
-    /**
-     * Cierra la ventana actual para regresar a la ventana que la invocó.
-     * (Asumiendo que se añade un botón de Volver/Regresar en el FXML, con fx:id="btnVolver").
-     * @param event 
-     */
+
     @FXML
     private void clicBotonVolver(ActionEvent event) {
         // Obtenemos el botón que disparó el evento (asumiendo que se llama btnVolver)
         Stage stageActual = (Stage) ((Button) event.getSource()).getScene().getWindow();
         stageActual.close();
     }
-
-
-    // --- Métodos Auxiliares ---
 
     private void limpiarCampos() {
         tfBuscarAlumno.setText("");
@@ -308,7 +281,6 @@ public class FXMLAdministradorRegistrarAlumnoCursoController implements Initiali
         cbCurso.getSelectionModel().clearSelection();
         lbMensaje.setText("");
         lbEstadoInscripcion.setText("");
-        // Vuelve a cargar la lista completa después de registrar para reflejar cambios si los hubiera
         cargarAlumnos();  
         cargarCursos();
     }

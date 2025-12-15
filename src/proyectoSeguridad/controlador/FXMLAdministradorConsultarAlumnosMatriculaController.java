@@ -41,26 +41,19 @@ public class FXMLAdministradorConsultarAlumnosMatriculaController implements Ini
 
     // --- Lógica de Cerrar Sesión ---
 
-    /**
-     * Cierra la sesión: abre la ventana de Login y cierra la ventana actual.
-     * @param event 
-     */
     @FXML
     private void clicBotonCerrarSesion(ActionEvent event) {
         try {
-            // 1. Cargar el FXML de Inicio de Sesión
             FXMLLoader loader = new FXMLLoader(getClass().getResource(
                     "/proyectoSeguridad/vista/FXMLInicioSesion.fxml"
             ));
             Parent root = loader.load();
             
-            // 2. Abrir la nueva Stage (Login)
             Stage stageNueva = new Stage();
             stageNueva.setScene(new Scene(root));
             stageNueva.setTitle("Inicio de Sesión");
             stageNueva.show(); 
             
-            // 3. Cerrar la Stage actual (Consulta de Alumnos por Matrícula)
             Stage stageActual = (Stage) btnCerrarSesion.getScene().getWindow();
             stageActual.close();
 
@@ -72,11 +65,6 @@ public class FXMLAdministradorConsultarAlumnosMatriculaController implements Ini
     
     // --- Lógica de Búsqueda (Navegación Interna) ---
 
-    /**
-     * Busca la matrícula y abre la ventana de resultados en una NUEVA Stage, 
-     * manteniendo la ventana de consulta actual abierta.
-     * @param event 
-     */
     @FXML
     private void clicBotonBuscar(ActionEvent event) {
 
@@ -115,18 +103,11 @@ public class FXMLAdministradorConsultarAlumnosMatriculaController implements Ini
 
             controlador.cargarInformacionAlumno(alumno, cursos);
 
-            // 1. Crear una NUEVA Stage
             Stage stageNueva = new Stage();
             stageNueva.setScene(new Scene(root));
             stageNueva.setTitle("Cursos del Alumno: " + matricula);
             
-            // 2. Mostrar la nueva Stage. La ventana actual permanece abierta.
             stageNueva.show(); 
-            
-            // Se eliminó: Stage stage = (Stage) tfMatriculaEstudiante.getScene().getWindow();
-            // Se eliminó: stage.setScene(new Scene(root));
-            // Se eliminó: stage.show();
-            // Esta lógica anterior reemplazaba el contenido, ahora abrimos una nueva Stage.
 
         } catch (SQLException ex) {
             mostrarAlerta("Error en Base de Datos", "Ocurrió un error al consultar la información.");
@@ -147,9 +128,8 @@ public class FXMLAdministradorConsultarAlumnosMatriculaController implements Ini
 
     @FXML
     private void tfNombreProyectoPresionaEnter(KeyEvent event) {
-         // Lógica para que al presionar ENTER se active la búsqueda
-         if (event.getCode().toString().equals("ENTER")) {
-             clicBotonBuscar(new ActionEvent());
-         }
+        if (event.getCode().toString().equals("ENTER")) {
+            clicBotonBuscar(new ActionEvent());
+        }
     }
 }

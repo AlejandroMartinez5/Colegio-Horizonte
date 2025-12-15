@@ -1,28 +1,28 @@
 package proyectoSeguridad.controlador;
 
-import java.io.IOException; // Necesario para FXMLLoader
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader; // NECESARIO
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent; // NECESARIO
-import javafx.scene.Scene; // NECESARIO
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType; // NECESARIO
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage; // NECESARIO
+import javafx.stage.Stage;
 import proyectoSeguridad.modelo.dao.AlumnoDAO;
 import proyectoSeguridad.modelo.dao.UsuarioDAO;
 import proyectoSeguridad.modelo.pojo.Alumno;
 import proyectoSeguridad.modelo.pojo.ResultadoOperacion;
 import proyectoSeguridad.modelo.pojo.Usuario;
+import proyectoSeguridad.utilidades.Utilidad;
 
 public class FXMLAdministradorRegistrarAlumnoController implements Initializable {
 
@@ -44,8 +44,6 @@ public class FXMLAdministradorRegistrarAlumnoController implements Initializable
     private Button btnCerrarSesion;
     @FXML
     private ImageView btn;
-    
-    // Suponiendo que se añade un botón de Volver/Regresar en el FXML
     @FXML
     private Button btnVolver; 
 
@@ -54,27 +52,18 @@ public class FXMLAdministradorRegistrarAlumnoController implements Initializable
         // Inicialización si es necesaria
     }    
 
-    // --- Lógica de Navegación ---
-
-    /**
-     * Cierra la sesión: abre la ventana de Login y cierra la ventana actual.
-     * @param event 
-     */
     @FXML
     private void clicBotonCerrarSesion(ActionEvent event) {
         if (mostrarAlertaConfirmacion("Cerrar Sesión", "¿Está seguro que desea cerrar la sesión y volver al login?")) {
             try {
-                // 1. Cargar el FXML de Inicio de Sesión
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/proyectoSeguridad/vista/FXMLInicioSesion.fxml"));
                 Parent root = loader.load();
                 
-                // 2. Abrir la nueva Stage (Login)
                 Stage stageNueva = new Stage();
                 stageNueva.setScene(new Scene(root));
                 stageNueva.setTitle("Inicio de Sesión");
                 stageNueva.show(); 
                 
-                // 3. Obtener la Stage actual y CERRARLA
                 Stage stageActual = (Stage) btnCerrarSesion.getScene().getWindow();
                 stageActual.close();
 
@@ -85,18 +74,12 @@ public class FXMLAdministradorRegistrarAlumnoController implements Initializable
         }
     }
     
-    /**
-     * Cierra la ventana actual para regresar a la ventana que la invocó.
-     * (Asumiendo que se añade un botón de Volver/Regresar en el FXML).
-     * @param event 
-     */
     @FXML
     private void clicBotonVolver(ActionEvent event) {
         Stage stageActual = (Stage) ((Button) event.getSource()).getScene().getWindow();
         stageActual.close();
     }
     
-    // --- Lógica de Registro ---
 
     @FXML
     private void clicBotonRegistrarAlumno(ActionEvent event) {
@@ -122,12 +105,18 @@ public class FXMLAdministradorRegistrarAlumnoController implements Initializable
                 return;
             }
 
+            String contrasenaHasheada = Utilidad.calcularHash(contrasena);
+
+            if (contrasenaHasheada == null) {
+                mostrarAlerta(Alert.AlertType.ERROR, "Error interno", "No se pudo procesar la contraseña.");
+                return;
+            }
+
             Usuario nuevoUsuario = new Usuario();
             nuevoUsuario.setNombre(nombre);
             nuevoUsuario.setApellido(apellido);
             nuevoUsuario.setUsername(username);
-            // NOTA: En un sistema real, la contraseña debe ser HASHED antes de guardarse.
-            nuevoUsuario.setContrasenaHash(contrasena); 
+            nuevoUsuario.setContrasenaHash(contrasenaHasheada); 
             nuevoUsuario.setRol("Alumno");
 
             ResultadoOperacion resUsuario = UsuarioDAO.registrarUsuario(nuevoUsuario);
@@ -136,8 +125,12 @@ public class FXMLAdministradorRegistrarAlumnoController implements Initializable
                 return;
             }
 
-            // Se asume que esta función obtiene el ID correcto del usuario recién creado.
-            int idUsuario = UsuarioDAO.obtenerIdUsuarioPorCredenciales(username, contrasena);
+            int idUsuario = UsuarioDAO.obtenerIdUsuarioPorCredenciales(username, contrasenaHasheada);
+
+            if (idUsuario <= 0) {
+                 mostrarAlerta(Alert.AlertType.ERROR, "Error de recuperación", "El usuario se creó pero no se pudo recuperar su ID.");
+                 return;
+            }
 
             Alumno nuevoAlumno = new Alumno();
             nuevoAlumno.setIdUsuario(idUsuario);
@@ -146,7 +139,6 @@ public class FXMLAdministradorRegistrarAlumnoController implements Initializable
 
             ResultadoOperacion resAlumno = AlumnoDAO.registrarAlumno(nuevoAlumno);
             if(resAlumno.isError()){
-                // Si falla el registro del alumno, deberías considerar borrar el registro de Usuario
                 mostrarAlerta(Alert.AlertType.ERROR, "Error al registrar alumno", resAlumno.getMensaje());
                 return;
             }

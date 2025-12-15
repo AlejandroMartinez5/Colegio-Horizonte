@@ -5,15 +5,14 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert; // Necesario para mostrar errores de navegación/login
-import javafx.scene.control.Alert.AlertType; // Necesario para el tipo de alerta
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -38,7 +37,6 @@ public class FXMLAdministradorConsultarAlumnosCursoController implements Initial
     @FXML
     private Label lbReloj;
     
-    // Asumiendo que existe un botón para volver al menú anterior (ej. FXMLAdministradorConsultarAlumnos)
     @FXML 
     private Button btnVolver; 
     
@@ -47,13 +45,11 @@ public class FXMLAdministradorConsultarAlumnosCursoController implements Initial
         // Inicialización si es necesaria
     }
 
-    // --- Lógica de Búsqueda y Resultados (Navegación Interna) ---
     
     @FXML
     private void clicBotonBuscar(ActionEvent event) {
         String claveCurso = tfClaveCurso.getText().trim();
         if (claveCurso.isEmpty()) {
-            // Se debe usar la Utilidad o Alert para mostrar el mensaje al usuario
             Alert alert = new Alert(AlertType.WARNING);
             alert.setTitle("Campo Requerido");
             alert.setHeaderText(null);
@@ -86,10 +82,7 @@ public class FXMLAdministradorConsultarAlumnosCursoController implements Initial
         }
     }
 
-    /**
-     * Muestra la ventana de resultados sin cerrar la ventana actual de consulta.
-     * Patrón de Ventanas Apiladas (mantener la ventana anterior abierta).
-     */
+    
     private void mostrarResultado(Curso curso, List<Alumno> alumnos) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(
@@ -102,12 +95,10 @@ public class FXMLAdministradorConsultarAlumnosCursoController implements Initial
 
             controller.cargarInformacionCurso(curso, alumnos);
 
-            // Se crea una NUEVA Stage (ventana)
             Stage stageNueva = new Stage();
             stageNueva.setScene(new Scene(vista));
             stageNueva.setTitle("Alumnos del curso " + curso.getNombreMateria());
             
-            // Se muestra la nueva ventana. La ventana actual permanece abierta.
             stageNueva.show();
 
         } catch (IOException e) {
@@ -120,28 +111,20 @@ public class FXMLAdministradorConsultarAlumnosCursoController implements Initial
         }
     }
 
-    // --- Métodos de Navegación de la Ventana Principal ---
 
-    /**
-     * Cierra la sesión: abre la ventana de Login y cierra la ventana actual.
-     * @param event 
-     */
     @FXML
     private void clicBotonCerrarSesion(ActionEvent event) {
         try {
-            // 1. Cargar el FXML de Inicio de Sesión
             FXMLLoader loader = new FXMLLoader(getClass().getResource(
                     "/proyectoSeguridad/vista/FXMLInicioSesion.fxml"
             ));
             Parent root = loader.load();
             
-            // 2. Abrir la nueva Stage (Login)
             Stage stageNueva = new Stage();
             stageNueva.setScene(new Scene(root));
             stageNueva.setTitle("Inicio de Sesión");
             stageNueva.show(); 
             
-            // 3. Cerrar la Stage actual (Consulta de Alumnos por Curso)
             Stage stageActual = (Stage) btnCerrarSesion.getScene().getWindow();
             stageActual.close();
 
@@ -155,15 +138,8 @@ public class FXMLAdministradorConsultarAlumnosCursoController implements Initial
         }
     }
     
-    /**
-     * Método para volver a la ventana anterior, si no quieres un botón de regreso
-     * puedes obviar este método o adaptarlo.
-     * * @param event 
-     */
     @FXML
     private void clicBotonVolver(ActionEvent event) {
-        // Obtenemos la Stage actual y la cerramos.
-        // Asumimos que la ventana anterior sigue abierta o que la aplicación principal la maneja.
         Stage stageActual = (Stage) ((Button) event.getSource()).getScene().getWindow();
         stageActual.close();
     }
@@ -171,6 +147,6 @@ public class FXMLAdministradorConsultarAlumnosCursoController implements Initial
 
     @FXML
     private void tfNombreProyectoPresionaEnter(KeyEvent event) {
-        // Puedes agregar la lógica para llamar a clicBotonBuscar(null) aquí
+        // Lógica para llamar a clicBotonBuscar(null) si se presiona Enter en el campo de texto.
     }
 }

@@ -44,7 +44,6 @@ public class FXMLDocenteSubirCalificacionesController implements Initializable {
 
     private int idDocente;
     
-    // Mapas para obtener IDs a partir de la selección en los ComboBox
     private Map<String, Integer> mapaCursos;
     private Map<String, Integer> mapaAlumnos;
 
@@ -53,7 +52,6 @@ public class FXMLDocenteSubirCalificacionesController implements Initializable {
         mapaCursos = new HashMap<>();
         mapaAlumnos = new HashMap<>();
         
-        // Listener para validar que solo se escriban números y un punto decimal
         tfPuntaje.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*(\\.\\d*)?")) {
                 tfPuntaje.setText(oldValue);
@@ -61,9 +59,6 @@ public class FXMLDocenteSubirCalificacionesController implements Initializable {
         });
     }
     
-    /**
-     * Recibe el ID del docente y carga sus cursos.
-     */
     public void setDocente(int idDocente) {
         this.idDocente = idDocente;
         cargarCursos();
@@ -105,7 +100,6 @@ public class FXMLDocenteSubirCalificacionesController implements Initializable {
     
     private void cargarAlumnos(int idCurso) {
         try {
-            // Nota: Se asume que AlumnoDAO.obtenerAlumnosPorCurso() también carga Nombre y Apellido
             List<Alumno> alumnos = AlumnoDAO.obtenerAlumnosPorCurso(idCurso);
             ObservableList<String> items = FXCollections.observableArrayList();
             
@@ -113,8 +107,6 @@ public class FXMLDocenteSubirCalificacionesController implements Initializable {
                 cbAlumnos.setPromptText("Sin alumnos inscritos");
             } else {
                 for (Alumno a : alumnos) {
-                    // Muestra Nombre Apellido (Matricula)
-                    // Nota: Se asume que los objetos Alumno devueltos contienen Nombre y Apellido.
                     String etiqueta = a.getNombre() + " " + a.getApellido() + " (" + a.getMatricula() + ")";
                     items.add(etiqueta);
                     mapaAlumnos.put(etiqueta, a.getIdAlumno());
@@ -154,11 +146,9 @@ public class FXMLDocenteSubirCalificacionesController implements Initializable {
             return;
         }
         
-        // 2. Preparar objeto
         int idCurso = mapaCursos.get(cursoSel);
         int idAlumno = mapaAlumnos.get(alumnoSel);
-        
-        // --- VALIDACIÓN DE EXISTENCIA: Reemplazar calificación anterior ---
+
         eliminarCalificacionAnteriorSiExiste(idCurso, idAlumno);
         // ------------------------------------------------------------------
         
@@ -166,10 +156,8 @@ public class FXMLDocenteSubirCalificacionesController implements Initializable {
         nuevaCalificacion.setIdCurso(idCurso);
         nuevaCalificacion.setIdAlumno(idAlumno);
         nuevaCalificacion.setPuntaje(puntaje);
-        // Generamos fecha actual (YYYY-MM-DD)
         nuevaCalificacion.setFechaRegistro(LocalDate.now().toString()); 
         
-        // 3. Guardar en BD (Registrar la nueva)
         ResultadoOperacion resultado = CalificacionDAO.registrarCalificacion(nuevaCalificacion);
         
         if (!resultado.isError()) {
@@ -181,37 +169,23 @@ public class FXMLDocenteSubirCalificacionesController implements Initializable {
             Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Error", resultado.getMensaje());
         }
     }
-    
-    /**
-     * Busca si ya existe una calificación para el alumno en el curso dado.
-     * Si existe, la elimina para permitir registrar la nueva (simulando un UPDATE).
-     */
+
     private void eliminarCalificacionAnteriorSiExiste(int idCurso, int idAlumno) {
-        // Obtenemos todas las calificaciones del curso
         List<Calificacion> calificacionesCurso = CalificacionDAO.obtenerCalificacionesPorCurso(idCurso);
         
         if (calificacionesCurso != null) {
             for (Calificacion c : calificacionesCurso) {
-                // Si encontramos una calificación que pertenezca al alumno seleccionado
                 if (c.getIdAlumno() == idAlumno) {
-                    // La eliminamos usando su ID único
                     CalificacionDAO.eliminarCalificacion(c.getIdCalificacion());
-                    // Rompemos el ciclo asumiendo que solo debería haber una
                     break; 
                 }
             }
         }
     }
 
-    /**
-     * CIERRE DE VENTANA: Cierra la Stage actual para regresar a la vista anterior (Menú del Docente).
-     */
     @FXML
     private void clicBotonRegresar(ActionEvent event) {
-        // Obtiene la Stage actual a partir del botón
         Stage stage = (Stage) btnRegresar.getScene().getWindow();
-        
-        // Cierra la Stage, manteniendo la Stage anterior abierta.
         stage.close();
     }
 }

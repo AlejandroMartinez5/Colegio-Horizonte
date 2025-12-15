@@ -37,7 +37,6 @@ public class FXMLAlumnoComunicadosController implements Initializable {
     @FXML
     private TableColumn<Map<String, Object>, String> colContenido;
 
-    // Lista observable para la tabla
     private ObservableList<Map<String, Object>> listaComunicados;
 
     @Override
@@ -48,14 +47,10 @@ public class FXMLAlumnoComunicadosController implements Initializable {
         agregarListenerDobleClic();
     }
     
-    /**
-     * Configura las columnas para leer los datos del Mapa devuelto por el DAO.
-     */
     private void configurarTabla() {
         colTitulo.setCellValueFactory(data -> new SimpleStringProperty((String) data.getValue().get("titulo")));
         colAutor.setCellValueFactory(data -> new SimpleStringProperty((String) data.getValue().get("autor")));
         
-        // Vista previa corta del contenido (primeros 50 caracteres)
         colContenido.setCellValueFactory(data -> {
             String contenido = (String) data.getValue().get("contenido");
             if (contenido != null && contenido.length() > 50) {
@@ -64,7 +59,6 @@ public class FXMLAlumnoComunicadosController implements Initializable {
             return new SimpleStringProperty(contenido);
         });
 
-        // Formato de fecha y hora
         colFecha.setCellValueFactory(data -> {
             Timestamp ts = (Timestamp) data.getValue().get("fechaPublicacion");
             String fechaStr = ts != null ? ts.toString().substring(0, 16) : "N/A";
@@ -75,12 +69,8 @@ public class FXMLAlumnoComunicadosController implements Initializable {
         tvComunicados.setPlaceholder(new javafx.scene.control.Label("No hay comunicados publicados actualmente."));
     }
 
-    /**
-     * Carga la lista de comunicados desde la Base de Datos.
-     */
     private void cargarComunicados() {
         try {
-            // Reutilizamos el DAO existente que trae todos los comunicados públicos
             List<Map<String, Object>> resultados = ComunicadoDAO.obtenerComunicadosDetallados();
             if (resultados != null) {
                 listaComunicados.addAll(resultados);
@@ -91,9 +81,6 @@ public class FXMLAlumnoComunicadosController implements Initializable {
         }
     }
 
-    /**
-     * Permite ver el mensaje completo al dar doble clic.
-     */
     private void agregarListenerDobleClic() {
         tvComunicados.setOnMouseClicked((MouseEvent event) -> {
             if (event.getClickCount() == 2) {
@@ -105,9 +92,6 @@ public class FXMLAlumnoComunicadosController implements Initializable {
         });
     }
 
-    /**
-     * Muestra una alerta con el contenido completo del comunicado.
-     */
     private void mostrarDetalle(Map<String, Object> item) {
         String titulo = (String) item.get("titulo");
         String contenido = (String) item.get("contenido");
@@ -118,7 +102,6 @@ public class FXMLAlumnoComunicadosController implements Initializable {
         alert.setTitle("Aviso Institucional");
         alert.setHeaderText(titulo + "\nPublicado por: " + autor + " (" + fecha + ")");
         
-        // TextArea de solo lectura para contenido largo
         TextArea textArea = new TextArea(contenido);
         textArea.setEditable(false);
         textArea.setWrapText(true);

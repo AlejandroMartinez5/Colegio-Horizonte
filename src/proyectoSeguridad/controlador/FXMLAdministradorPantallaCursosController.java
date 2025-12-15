@@ -9,12 +9,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert.AlertType; // Necesario para Utilidad.mostrarAlertaSimple
+import javafx.scene.control.Alert.AlertType; 
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import proyectoSeguridad.utilidades.Utilidad; // Asumo que esta clase maneja las alertas
+import proyectoSeguridad.utilidades.Utilidad; 
 
 public class FXMLAdministradorPantallaCursosController implements Initializable {
 
@@ -38,24 +38,18 @@ public class FXMLAdministradorPantallaCursosController implements Initializable 
         // TODO
     }    
 
-    // --- Lógica de Navegación Externa (Cerrar Sesión) ---
-
     @FXML
     private void clicBotonCerrarSesion(ActionEvent event) {
-        // Asumo que tienes una clase Utilidad con método mostrarAlertaConfirmacion
         if (Utilidad.mostrarAlertaConfirmacion("Cerrar Sesión", "¿Está seguro que desea cerrar la sesión y volver al login?")) {
             try {
-                // 1. Cargar el FXML de Inicio de Sesión
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/proyectoSeguridad/vista/FXMLInicioSesion.fxml"));
                 Parent root = loader.load();
                 
-                // 2. Abrir la nueva Stage (Login)
                 Stage stageNueva = new Stage();
                 stageNueva.setScene(new Scene(root));
                 stageNueva.setTitle("Inicio de Sesión");
                 stageNueva.show(); 
                 
-                // 3. Obtener la Stage actual (Pantalla Cursos) y CERRARLA
                 Stage stageActual = (Stage) btnCerrarSesion.getScene().getWindow();
                 stageActual.close();
 
@@ -66,13 +60,6 @@ public class FXMLAdministradorPantallaCursosController implements Initializable 
         }
     }
 
-    // --- Lógica de Navegación Interna (Ventanas Apiladas) ---
-
-    /**
-     * CORREGIDO: Abre la ventana de Consulta de Cursos en una NUEVA Stage,
-     * manteniendo la ventana actual abierta.
-     * @param event 
-     */
     @FXML
     private void clicBotonConsultarCursos(ActionEvent event) {
         try {
@@ -82,7 +69,6 @@ public class FXMLAdministradorPantallaCursosController implements Initializable 
 
             Parent root = loader.load();
 
-            // *** CORRECCIÓN: Crear una NUEVA Stage en lugar de reemplazar la Scene actual ***
             Stage stageNueva = new Stage();
             stageNueva.setScene(new Scene(root));
             stageNueva.setTitle("Consultar Cursos");
@@ -94,11 +80,6 @@ public class FXMLAdministradorPantallaCursosController implements Initializable 
         }
     }
 
-    /**
-     * CORREGIDO: Abre la ventana para Agregar Alumnos a un Curso en una NUEVA Stage,
-     * manteniendo la ventana actual abierta.
-     * @param event 
-     */
     @FXML
     private void clicBotonAgregarAlumnosCurso(ActionEvent event) {
         try {
@@ -108,7 +89,6 @@ public class FXMLAdministradorPantallaCursosController implements Initializable 
 
             Parent root = loader.load();
 
-            // *** CORRECCIÓN: Crear una NUEVA Stage en lugar de reemplazar la Scene actual ***
             Stage stageNueva = new Stage();
             stageNueva.setScene(new Scene(root));
             stageNueva.setTitle("Registrar Alumno a Curso");
@@ -120,11 +100,6 @@ public class FXMLAdministradorPantallaCursosController implements Initializable 
         }
     }
 
-    /**
-     * CORREGIDO: Abre la ventana de Registro de Curso en una NUEVA Stage,
-     * manteniendo la ventana actual abierta.
-     * @param event 
-     */
     @FXML
     private void clicBotonRegistrarCurso(ActionEvent event) {
         try {
@@ -134,7 +109,6 @@ public class FXMLAdministradorPantallaCursosController implements Initializable 
 
             Parent root = loader.load();
 
-            // *** CORRECCIÓN: Crear una NUEVA Stage en lugar de reemplazar la Scene actual ***
             Stage stageNueva = new Stage();
             stageNueva.setScene(new Scene(root));
             stageNueva.setTitle("Registrar Nuevo Curso");

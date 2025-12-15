@@ -5,7 +5,6 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-// Importaciones de JavaFX para la navegación (Stage, Scene, Parent, FXMLLoader)
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -33,7 +32,6 @@ import proyectoSeguridad.utilidades.Utilidad;
 
 public class FXMLAdministradorComunicadosController implements Initializable {
 
-    // Controles de Publicación
     @FXML private Button btnCerrarSesion;
     @FXML private TextField tfTitulo;
     @FXML private TextArea taContenido;
@@ -42,17 +40,14 @@ public class FXMLAdministradorComunicadosController implements Initializable {
     @FXML private Label lbErrorTitulo;
     @FXML private Label lbErrorContenido;
     
-    // Controles de Consulta
     @FXML private TableView<Map<String, Object>> tvComunicados;
     @FXML private TableColumn<Map<String, Object>, String> colTitulo;
     @FXML private TableColumn<Map<String, Object>, String> colContenido;
     @FXML private TableColumn<Map<String, Object>, String> colFecha;
     @FXML private TableColumn<Map<String, Object>, String> colAutor;
 
-    // Datos de Sesión (Simulación: Esto debe venir del login)
     private int idUsuarioAdmin = 3; 
 
-    // Lista observable
     private ObservableList<Map<String, Object>> listaComunicados;
 
     @Override
@@ -63,8 +58,6 @@ public class FXMLAdministradorComunicadosController implements Initializable {
         agregarListenerATabla(); 
     }
     
-    // --- Métodos de Inicialización y Carga ---
-
     private void configurarTabla() {
         colTitulo.setCellValueFactory(data -> new SimpleStringProperty((String) data.getValue().get("titulo")));
         colContenido.setCellValueFactory(data -> new SimpleStringProperty((String) data.getValue().get("contenido")));
@@ -140,7 +133,6 @@ public class FXMLAdministradorComunicadosController implements Initializable {
     }
 
 
-    // --- Métodos de Acción ---
 
     @FXML
     private void clicBotonPublicar(ActionEvent event) {
@@ -195,28 +187,18 @@ public class FXMLAdministradorComunicadosController implements Initializable {
     public void setIdUsuarioAdmin(int idAdmin) {
         this.idUsuarioAdmin = idAdmin;
     }
-    
-    /**
-     * MÉTODOS DE NAVEGACIÓN
-     * Este método cierra la ventana actual (Administrador) y abre la de Inicio de Sesión.
-     */
+
     @FXML
     private void clicBotonCerrarSesion(ActionEvent event) {
         try {
-            // 1. Cargar el FXML de la nueva ventana (Inicio de Sesión)
             FXMLLoader cargadorFXML = new FXMLLoader(getClass().getResource("/proyectoSeguridad/vista/FXMLInicioSesion.fxml"));
             Parent vista = cargadorFXML.load();
             Scene escena = new Scene(vista);
             
-            // 2. Crear una nueva Stage (ventana) para el Login
             Stage stageNueva = new Stage();
             stageNueva.setScene(escena);
-            stageNueva.setTitle("Inicio de Sesión");
-            
-            // 3. Mostrar la nueva Stage.
+            stageNueva.setTitle("Inicio de Sesión");   
             stageNueva.show(); 
-            
-            // 4. Obtener la Stage actual (la del Administrador) y CERRARLA.
             Stage stageActual = (Stage) btnCerrarSesion.getScene().getWindow();
             stageActual.close();
             
@@ -226,26 +208,4 @@ public class FXMLAdministradorComunicadosController implements Initializable {
             e.printStackTrace();
         }
     }
-    
-    /**
-     * NOTA: Para cualquier otra navegación dentro de la sesión (ej. Menú Principal),
-     * debes usar el patrón de "ventanas apiladas" que te comenté, donde solo
-     * se llama a stageNueva.show() y NO se cierra la ventana actual.
-     * Ejemplo para un botón 'btnIrAMenu':
-     *
-     * @FXML
-     * private void clicBotonIrAMenuPrincipal(ActionEvent event) {
-     * try {
-     * FXMLLoader cargadorFXML = new FXMLLoader(getClass().getResource("/proyectoSeguridad/vista/FXMLMenuPrincipal.fxml"));
-     * Parent vista = cargadorFXML.load();
-     * Stage stageNueva = new Stage();
-     * stageNueva.setScene(new Scene(vista));
-     * stageNueva.setTitle("Menú Principal");
-     * stageNueva.show(); 
-     * // La ventana actual NO se cierra
-     * } catch (Exception e) {
-     * // ... manejo de error
-     * }
-     * }
-     */
 }

@@ -5,22 +5,18 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader; // Importación explícita
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent; // Importación explícita
-import javafx.scene.Scene; // Importación explícita
-import javafx.scene.control.Alert.AlertType; // Necesario para Utilidad.mostrarAlertaSimple
+import javafx.scene.Parent; 
+import javafx.scene.Scene; 
+import javafx.scene.control.Alert.AlertType; 
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage; // Importación explícita
-import proyectoSeguridad.utilidades.Utilidad; // Asumo que esta clase maneja las alertas
+import javafx.stage.Stage; 
+import proyectoSeguridad.utilidades.Utilidad; 
 
-/**
- * FXML Controller class
- *
- * @author wilma
- */
+
 public class FXMLAdministradorPantallaInscripcionesController implements Initializable {
 
     @FXML
@@ -40,31 +36,25 @@ public class FXMLAdministradorPantallaInscripcionesController implements Initial
     @FXML
     private Button btnConsultarPago;
 
-    /**
-     * Initializes the controller class.
-     */
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
 
-    // --- Lógica de Navegación Externa (Cerrar Sesión) ---
     
     @FXML
     private void clicBotonCerrarSesion(ActionEvent event) {
         if (Utilidad.mostrarAlertaConfirmacion("Cerrar Sesión", "¿Está seguro que desea cerrar la sesión y volver al login?")) {
             try {
-                // 1. Cargar el FXML de Inicio de Sesión
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/proyectoSeguridad/vista/FXMLInicioSesion.fxml"));
                 Parent root = loader.load();
-                
-                // 2. Abrir la nueva Stage (Login)
+
                 Stage stageNueva = new Stage();
                 stageNueva.setScene(new Scene(root));
                 stageNueva.setTitle("Inicio de Sesión");
                 stageNueva.show(); 
                 
-                // 3. Obtener la Stage actual (Pantalla Inscripciones) y CERRARLA
                 Stage stageActual = (Stage) btnCerrarSesion.getScene().getWindow();
                 stageActual.close();
 
@@ -75,7 +65,6 @@ public class FXMLAdministradorPantallaInscripcionesController implements Initial
         }
     }
 
-    // --- Lógica de Navegación Interna (Ventanas Apiladas) ---
 
     @FXML
     private void clicBotonConsultarPendientes(ActionEvent event) {
@@ -101,7 +90,7 @@ public class FXMLAdministradorPantallaInscripcionesController implements Initial
             Parent root = loader.load();
 
             Stage stage = new Stage();
-            stage.setTitle("Registrar Pago"); // Título ajustado para mayor claridad
+            stage.setTitle("Registrar Pago"); 
             stage.setScene(new Scene(root));
             stage.show();
         } catch (Exception e) {
@@ -117,7 +106,7 @@ public class FXMLAdministradorPantallaInscripcionesController implements Initial
             Parent root = loader.load();
 
             Stage stage = new Stage();
-            stage.setTitle("Consultar Pagos"); // Título ajustado para mayor claridad
+            stage.setTitle("Consultar Pagos"); 
             stage.setScene(new Scene(root));
             stage.show();
         } catch (Exception e) {

@@ -44,22 +44,16 @@ public class FXMLAlumnoConsultarCalificacionesController implements Initializabl
         configurarTabla();
     }
     
-    /**
-     * Método llamado desde el menú principal para pasar el ID del alumno.
-     * @param idAlumno ID del alumno logueado.
-     */
     public void setIdAlumno(int idAlumno) {
         this.idAlumno = idAlumno;
         cargarCalificaciones();
     }
 
     private void configurarTabla() {
-        // Enlace de las columnas con las claves del Mapa devuelto por el DAO
         colCurso.setCellValueFactory(data -> new SimpleStringProperty((String) data.getValue().get("cursoCompleto")));
         colDocente.setCellValueFactory(data -> new SimpleStringProperty((String) data.getValue().get("docenteCompleto")));
         colFecha.setCellValueFactory(data -> new SimpleStringProperty((String) data.getValue().get("fechaRegistro")));
         
-        // El puntaje es Double en el DAO, lo envolvemos en SimpleObjectProperty
         colPuntaje.setCellValueFactory(data -> new SimpleObjectProperty<>((Double) data.getValue().get("puntaje")));
         
         tvCalificaciones.setItems(listaCalificaciones);
@@ -68,7 +62,7 @@ public class FXMLAlumnoConsultarCalificacionesController implements Initializabl
 
     private void cargarCalificaciones() {
         if (idAlumno <= 0) {
-            return; // No cargar si el ID no es válido
+            return; 
         }
         
         try {
@@ -83,15 +77,9 @@ public class FXMLAlumnoConsultarCalificacionesController implements Initializabl
         }
     }
 
-    /**
-     * CIERRE DE VENTANA: Cierra la Stage actual para regresar a la vista anterior (Menú del Alumno).
-     */
     @FXML
     private void clicBotonRegresar(ActionEvent event) {
-        // Obtiene la Stage actual a partir del botón
         Stage stage = (Stage) btnRegresar.getScene().getWindow();
-        
-        // Cierra la Stage, manteniendo la Stage anterior abierta.
         stage.close();
     }
 }

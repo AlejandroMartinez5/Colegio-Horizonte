@@ -6,11 +6,11 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert; // Importación de Alert
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage; // Importación de Stage
+import javafx.stage.Stage;
 import proyectoSeguridad.modelo.dao.DocenteDAO;
 import proyectoSeguridad.modelo.dao.UsuarioDAO;
 import proyectoSeguridad.modelo.pojo.Docente;
@@ -31,7 +31,6 @@ public class FXMLAdministradorConsultarDocenteNumEmpleadoController implements I
     @FXML
     private Button btnBuscar;
     
-    // Suponiendo que agregas este botón a tu FXML para volver a la ventana anterior
     @FXML
     private Button btnVolver; 
 
@@ -40,7 +39,6 @@ public class FXMLAdministradorConsultarDocenteNumEmpleadoController implements I
         limpiarLabels();
     }    
 
-    // --- Lógica de Búsqueda ---
     
     @FXML
     private void clicBotonBuscar(ActionEvent event) {
@@ -62,17 +60,13 @@ public class FXMLAdministradorConsultarDocenteNumEmpleadoController implements I
                 return;
             }
 
-            // Obtener información del usuario
             String nombreCompleto = UsuarioDAO.obtenerNombreCompletoPorId(docente.getIdUsuario());
             String username = UsuarioDAO.obtenerUsernamePorIdUsuario(docente.getIdUsuario());
 
-            // Separar nombre y apellido
-            // Nota: Esta separación es básica y asume que el primer espacio separa el nombre y el apellido.
             String[] partesNombre = nombreCompleto != null ? nombreCompleto.split("\\s+", 2) : new String[]{"---", "---"};
             String nombre = partesNombre.length > 0 ? partesNombre[0] : "---";
             String apellido = partesNombre.length > 1 ? partesNombre[1] : "---";
 
-            // Mostrar los datos en los labels
             lbNombre.setText(nombre);
             lbApellido.setText(apellido);
             lbUsername.setText(username != null ? username : "---");
@@ -96,19 +90,10 @@ public class FXMLAdministradorConsultarDocenteNumEmpleadoController implements I
         lbNumeroEmpleado.setText("---");
     }
     
-    // --- Lógica de Navegación (Regreso) ---
-    
-    /**
-     * Cierra la ventana actual para regresar a la ventana que la invocó.
-     * Este método se debe usar en un botón de "Regresar" o "Volver" en el FXML.
-     * @param event 
-     */
+
     @FXML
     private void clicBotonVolver(ActionEvent event) {
-        // Obtiene la Stage (ventana) actual a partir del botón que disparó el evento
         Stage stageActual = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        
-        // Cierra la ventana, regresando a la anterior que sigue abierta.
         stageActual.close();
     }
 }

@@ -46,8 +46,7 @@ public class FXMLDocenteConsultarAlumnosController implements Initializable {
     private Button btnExportarPDF;
     @FXML
     private ComboBox<String> cbCursos;
-    
-    // Cambiamos a Map para mayor flexibilidad sin tocar el POJO
+
     @FXML
     private TableView<Map<String, Object>> tvAlumnos;
     @FXML
@@ -57,8 +56,7 @@ public class FXMLDocenteConsultarAlumnosController implements Initializable {
     @FXML
     private TableColumn<Map<String, Object>, String> colApellido;
     @FXML
-    private TableColumn<Map<String, Object>, String> colCalificacion; // Nueva columna
-
+    private TableColumn<Map<String, Object>, String> colCalificacion; 
     private int idDocente;
     private Map<String, Integer> mapaCursos;
     private ObservableList<Map<String, Object>> listaAlumnos;
@@ -78,7 +76,6 @@ public class FXMLDocenteConsultarAlumnosController implements Initializable {
     }
 
     private void configurarTabla() {
-        // Configuramos las columnas para leer del Mapa
         colMatricula.setCellValueFactory(data -> new SimpleStringProperty((String) data.getValue().get("matricula")));
         colNombre.setCellValueFactory(data -> new SimpleStringProperty((String) data.getValue().get("nombre")));
         colApellido.setCellValueFactory(data -> new SimpleStringProperty((String) data.getValue().get("apellido")));
@@ -125,7 +122,6 @@ public class FXMLDocenteConsultarAlumnosController implements Initializable {
     private void cargarAlumnosDelCurso(int idCurso) {
         listaAlumnos.clear();
         try {
-            // Usamos la NUEVA consulta del DAO
             List<Map<String, Object>> alumnosObtenidos = AlumnoDAO.obtenerAlumnosConCalificacion(idCurso);
             
             if (alumnosObtenidos != null && !alumnosObtenidos.isEmpty()) {
@@ -166,19 +162,16 @@ public class FXMLDocenteConsultarAlumnosController implements Initializable {
             PdfWriter.getInstance(documento, new FileOutputStream(archivo));
             documento.open();
 
-            // Título
             Font fontTitulo = new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD);
             Paragraph titulo = new Paragraph("Reporte de Calificaciones - Colegio Horizonte", fontTitulo);
             titulo.setAlignment(Element.ALIGN_CENTER);
             documento.add(titulo);
             
-            // Subtítulo
             Paragraph subtitulo = new Paragraph("Curso: " + nombreCursoActual);
             subtitulo.setAlignment(Element.ALIGN_CENTER);
             subtitulo.setSpacingAfter(20);
             documento.add(subtitulo);
 
-            // Tabla PDF
             PdfPTable tabla = new PdfPTable(4); 
             tabla.setWidthPercentage(100);
             tabla.setWidths(new float[]{2f, 4f, 4f, 2f}); 
@@ -189,9 +182,7 @@ public class FXMLDocenteConsultarAlumnosController implements Initializable {
             agregarCeldaCabecera(tabla, "Apellidos", fontCabecera);
             agregarCeldaCabecera(tabla, "Calificación", fontCabecera);
 
-            // Datos desde el Mapa
             for (Map<String, Object> alumno : listaAlumnos) {
-                // Se asume que nombre y apellido están en campos separados en el mapa
                 tabla.addCell((String) alumno.get("matricula"));
                 tabla.addCell((String) alumno.get("nombre"));
                 tabla.addCell((String) alumno.get("apellido"));
@@ -220,9 +211,6 @@ public class FXMLDocenteConsultarAlumnosController implements Initializable {
         tabla.addCell(celda);
     }
 
-    /**
-     * CIERRE DE VENTANA: Cierra la Stage actual para regresar a la vista anterior (Menú del Docente).
-     */
     @FXML
     private void clicBotonRegresar(ActionEvent event) {
         Stage stage = (Stage) btnRegresar.getScene().getWindow();

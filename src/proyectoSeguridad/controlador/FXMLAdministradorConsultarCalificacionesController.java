@@ -2,7 +2,7 @@ package proyectoSeguridad.controlador;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException; // <-- NECESARIO para manejar errores de FXML
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -14,10 +14,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader; // <-- NECESARIO
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent; // <-- NECESARIO
-import javafx.scene.Scene; // <-- NECESARIO
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -27,7 +27,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage; // <-- NECESARIO
+import javafx.stage.Stage;
 
 // Importaciones para PDF (iText 5.x)
 import com.itextpdf.text.Document;
@@ -45,10 +45,6 @@ import proyectoSeguridad.modelo.dao.CursoDAO;
 import proyectoSeguridad.modelo.pojo.Curso;
 import proyectoSeguridad.utilidades.Utilidad;
 
-/**
- * Controlador para la ventana de consulta de calificaciones.
- * Refactorizado para SOLO buscar por Curso, sin columna ID Calificación y con exportación a PDF.
- */
 public class FXMLAdministradorConsultarCalificacionesController implements Initializable {
 
     // Controles FXML (Solo curso)
@@ -70,7 +66,7 @@ public class FXMLAdministradorConsultarCalificacionesController implements Initi
     private ObservableList<String> listaCompletaCursos;
     private ObservableList<Map<String, Object>> listaCalificaciones;
 
-    // --- Inicialización 🚀 ---
+    // --- Inicialización ---
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -83,21 +79,16 @@ public class FXMLAdministradorConsultarCalificacionesController implements Initi
     }
 
     private void configurarTablaConMapas() {
-        // La columna ID Calificación fue eliminada.
         
-        // Nombre Materia
         colNombreMateria.setCellValueFactory(data -> 
             new SimpleObjectProperty<>((String) data.getValue().get("nombreMateria")));
         
-        // Nombre Alumno
         colAlumno.setCellValueFactory(data -> 
             new SimpleObjectProperty<>((String) data.getValue().get("nombreAlumno")));
         
-        // Puntaje
         colPuntaje.setCellValueFactory(data -> 
             new SimpleObjectProperty<>((Double) data.getValue().get("puntaje")));
             
-        // Fecha Registro
         colFechaRegistro.setCellValueFactory(data -> 
             new SimpleObjectProperty<>((String) data.getValue().get("fechaRegistro")));
         
@@ -106,7 +97,6 @@ public class FXMLAdministradorConsultarCalificacionesController implements Initi
     
     private void cargarDatosFiltro() {
         try {
-            // SOLO Cargar Cursos
             List<Curso> cursos = CursoDAO.obtenerTodosLosCursos();
             for (Curso curso : cursos) {
                 String display = curso.getNombreMateria() + " (" + curso.getClaveCurso() + ")";
@@ -134,7 +124,7 @@ public class FXMLAdministradorConsultarCalificacionesController implements Initi
         if (!cbCurso.isShowing() && !listaFiltrada.isEmpty()) cbCurso.show(); 
     }
     
-    // --- Lógica de Consulta (Solo por Curso) 🛠️ ---
+    // --- Lógica de Consulta (Solo por Curso) ---
 
     @FXML
     private void clicConsultar(ActionEvent event) {
@@ -272,10 +262,6 @@ public class FXMLAdministradorConsultarCalificacionesController implements Initi
     
     // --- Otros Métodos de Acción (Cerrar Sesión) ---
 
-    /**
-     * Cierra la sesión: abre la ventana de Login y cierra la ventana actual.
-     * @param event 
-     */
     @FXML
     private void clicBotonCerrarSesion(ActionEvent event) {
         if (Utilidad.mostrarAlertaConfirmacion("Cerrar Sesión", "¿Está seguro que desea cerrar la sesión?")) {
